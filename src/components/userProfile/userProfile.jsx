@@ -1,0 +1,56 @@
+'use client';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Posts from '../Posts/posts';
+export default function UserProfile ({user,posts}) {
+    return(
+        <section className='profile'>
+            <div className='userInfo'>
+                <div className='userAvatar'>
+                    <img src={user[0].avatar} alt="avatar" />
+                </div>
+                <div className='userAbout'>
+                    <div className='username'>
+                        <h3>{user[0].username}</h3>
+                        <button className='follow-btn button button-primary'>Follow</button>
+                        <button className='message-btn button'>Message</button>
+                        <button className='addUser-btn button'>
+                            <img src="/img/icons/addUser.svg" alt="" />
+                        </button>
+                        <button className='more-btn button'>
+                            <div className='circle-more'></div>
+                            <div className='circle-more'></div>
+                            <div className='circle-more'></div>
+                        </button>
+                    </div>
+                    <div className='contentAbout'>
+                        <p>{user[0].stats.posts} post</p>
+                        <p>{user[0].stats.followers} followers</p>
+                        <p>{user[0].stats.following} following</p>
+                    </div>
+                    <div className='bio'>
+                        <h2>{user[0].bio}</h2>
+                    </div>
+                </div>
+            </div>
+            <div className='highlights'>
+                <div className='highlight'>
+                    <img src="" alt="" />
+                    <p>Highlight</p>
+                </div>
+                <div className='highlight'>
+                    <img src="" alt="" />
+                    <p>Highlight</p>
+                </div>
+            </div>
+            <div className="posts container">
+                <hr className="line"/>
+                <div className='posts-icon-line'></div>
+                <div className="posts-icon">
+                    <img src="/img/icons/postIcon.svg" alt="" />
+                    <h3>POSTS</h3>
+                </div>
+                <Posts posts={posts}/>
+            </div>
+        </section>
+    )
+}

@@ -1,9 +1,12 @@
 import UserLogin from '@/components/auth/userLogin'
-export default function Home() {
+import Footer from '@/components/Footer/footer'
+
+export default function Login() {
   return (
     <main>
       <div>
         <UserLogin />
+        <Footer/>
       </div>
     </main>
   )
