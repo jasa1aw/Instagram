@@ -7,3 +7,13 @@
     border: 1px solid #DBDBDB;
     border-radius: 4px;
 }
+.textarea{
+    border: none;
+    outline: none;
+    resize: none;
+}
+.textarea::placeholder{
+    font-size: 15px;
+    font-weight: 500;
+    color: rgb(115,115,115);
+}

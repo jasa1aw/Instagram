@@ -1,8 +1,6 @@
-
-import Footer from '@/components/Footer/footer'
-import Posts from '@/components/Posts/posts'
+'use client'
 import UserProfile from '@/components/userProfile/userProfile'
-
+import Footer from '@/components/Footer/footer'
 export default function Profile() {
   let user = [
     {

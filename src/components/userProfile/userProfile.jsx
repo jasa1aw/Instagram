@@ -1,9 +1,12 @@
 'use client';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Posts from '../Posts/posts';
+import Modal from '../selectImageModal/modal';
+import { useState } from 'react';
 export default function UserProfile ({user,posts}) {
+    const [openModal, setOpenModal] = useState(false)
     return(
         <section className='profile'>
+            {openModal && <Modal closeModal={setOpenModal}/>}
             <div className='userInfo'>
                 <div className='userAvatar'>
                     <img src={user[0].avatar} alt="avatar" />
@@ -51,6 +54,7 @@ export default function UserProfile ({user,posts}) {
                 </div>
                 <Posts posts={posts}/>
             </div>
+            <button onClick={() => {setOpenModal(true);}}>Open</button>
         </section>
     )
 }

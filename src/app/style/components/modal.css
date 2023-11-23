@@ -1,0 +1,123 @@
+.modalBackground{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+.modal-btn{
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    background-color: transparent;
+    z-index: 1;
+}
+
+.modalContainer{
+    width: 600px;
+    height: 600px;
+    border-radius: 12px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalContainer .title{
+    border-bottom: 1px solid rgb(115, 115, 115);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modalContainer .title2{
+    justify-content: space-between;
+}
+.modalContainer .title h2{
+    font-size: 18px;
+    font-weight: 600;
+}
+.modalContainer .body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0;
+    gap: 20px;
+}
+.modalContainer .body input{
+    position: relative;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+    width: 100%;
+}
+.select-btn{
+    position: absolute;
+    top: 61%;
+    opacity: 1;
+    transition: .3s;
+
+}
+.select-btn:hover{
+    background-color: rgb(24, 119, 242);
+}
+
+/* second */
+.uploadPost{
+    width: 900px;
+}
+
+.uploadPost .block{
+    display: flex;
+    width: calc(65% + 35%);
+    gap: 5px;
+    align-items: center;
+    height: 540px;
+}
+
+.back-btn, .share-btn{
+    background-color: transparent;
+}
+.share-btn{
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(24, 119, 242);
+}
+
+.block-item-img, .block-item-user{
+    height: 100%;
+}
+.block-item-user{
+    padding: 20px 15px;
+}
+
+.block-item-user .user{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.modalAvatar{
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.emoji{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+.emoji-img{
+    width: 30px;
+    height: 30px;
+}
+
