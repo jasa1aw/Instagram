@@ -1,14 +1,15 @@
 'use client';
-import {useState} from 'react';
+import Link from 'next/link';
+import { useState} from 'react';
 export default function UserLogin () {
     const [step, setStep] = useState(1);
     return(
         <section className="login-page">
-            {step == 1 && <div className='home-phone-img'>
+            {step == 2 && <div className='home-phone-img'>
                 <img src='/img/home-phones.png' />
             </div>}
             <div className='card-block'>
-                {step == 1 && <div className="card">
+                {step == 2 && <div className="card">
                         <div className='card-img'>
                             <img src="/img/icons/logo.svg" alt="" />
                         </div>
@@ -22,17 +23,17 @@ export default function UserLogin () {
                                 <hr/>
                             </div>
                             <div className='facebook-link'>
-                                <a href="" className='facebook-btn'><img src="/img/icons/facebook.svg" alt="facebook" /></a>
-                                <a href="">Log in with Facebook</a>
+                                <Link href={''} className='facebook-btn'><img src="/img/icons/facebook.svg" alt="facebook" /></Link>
+                                <Link href={''}>Log in with Facebook</Link>
                             </div>
-                            <a href=''>Forgot password?</a>
+                            <Link href={''} >Forgot password?</Link>
                         </form>
                     </div>}
-                {step == 1 && <div className="card">
-                        <p>Dont`t have an account?</p>
-                        <a onClick={()=> setStep(2)}>Sign up</a>
-                    </div>}
                 {step == 2 && <div className="card">
+                        <p>Dont`t have an account?</p>
+                        <Link href={'/'} onClick={() => setStep(1)}>Sign up</Link>
+                    </div>}
+                {step == 1 && <div className="card">
                         <div className='card-img'>
                             <img src="/img/icons/logo.svg" alt="" />
                         </div>
@@ -40,8 +41,8 @@ export default function UserLogin () {
                             Sign up to see photos and videos from your friends.
                         </h2>
                         <div className='facebook-link facebook-link-btn'>
-                                <a href="" className='facebook-btn'><img src="/img/icons/facebook2.svg" alt="facebook" /></a>
-                                <a href="">Log in with Facebook</a>
+                            <Link href={''} className='facebook-btn'><img src="/img/icons/facebook2.svg" alt="facebook" /></Link>
+                                <Link href={''}>Log in with Facebook</Link>
                         </div>
                         <div className='lines'>
                                 <hr/>
@@ -56,13 +57,13 @@ export default function UserLogin () {
                             <p className='privace-sub'>
                                 People who use our service may have uploaded 
                                 your contact information to Instagram. 
-                                <a>Learn More</a>
+                                <Link href={''}>Learn More</Link>
                             </p>
                             <p className='privace-sub'>
                                 By signing up, you agree to our 
-                                <a>Terms , Privacy Policy </a>
+                                <Link href={''}> Terms , Privacy Policy </Link>
                                 and 
-                                <a>Cookies Policy</a>.
+                                <Link href={''}> Cookies Policy</Link>.
                             </p>
                             <button className='button button-primary'>Sign up</button>
                             
@@ -70,9 +71,9 @@ export default function UserLogin () {
                             <a href=''>Забыли пароль?</a>
                         </form>
                     </div>}
-                    {step == 2 && <div className="card">
+                    {step == 1 && <div className="card">
                         <p>Have an account?</p>
-                        <a onClick={()=> setStep(1)}>Log in</a>
+                        <Link href={'/login'} onClick={() => setStep(2)}>Log in</Link>
                     </div>}
                 <div className='appLink'>
                     <p>Get the app.</p>
