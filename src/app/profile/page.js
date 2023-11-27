@@ -2,7 +2,7 @@
 import UserProfile from '@/components/userProfile/userProfile'
 import Footer from '@/components/Footer/footer'
 export default function Profile() {
-  let user = [
+  let user =
     {
         avatar:"/img/profile/avatar.jpg",
         username:"Shalame",
@@ -13,7 +13,6 @@ export default function Profile() {
         },
         bio:"Timoti"
     }
-]
   let userPost = [
     {
       url: '/img/profile/posts/post1.svg',

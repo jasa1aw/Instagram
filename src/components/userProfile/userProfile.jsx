@@ -9,11 +9,11 @@ export default function UserProfile ({user,posts}) {
             {openModal && <Modal closeModal={setOpenModal}/>}
             <div className='userInfo'>
                 <div className='userAvatar'>
-                    <img src={user[0].avatar} alt="avatar" />
+                    <img src={user.avatar} alt="avatar" />
                 </div>
                 <div className='userAbout'>
                     <div className='username'>
-                        <h3>{user[0].username}</h3>
+                        <h3>{user.username}</h3>
                         <button className='follow-btn button button-primary'>Follow</button>
                         <button className='message-btn button'>Message</button>
                         <button className='addUser-btn button'>
@@ -26,12 +26,12 @@ export default function UserProfile ({user,posts}) {
                         </button>
                     </div>
                     <div className='contentAbout'>
-                        <p>{user[0].stats.posts} post</p>
-                        <p>{user[0].stats.followers} followers</p>
-                        <p>{user[0].stats.following} following</p>
+                        <p>{user.stats.posts} post</p>
+                        <p>{user.stats.followers} followers</p>
+                        <p>{user.stats.following} following</p>
                     </div>
                     <div className='bio'>
-                        <h2>{user[0].bio}</h2>
+                        <h2>{user.bio}</h2>
                     </div>
                 </div>
             </div>
