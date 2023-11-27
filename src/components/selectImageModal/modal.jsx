@@ -104,12 +104,7 @@ export default function Modal({ closeModal }) {
               <img className="img" src="/img/icons/arrowLeft.svg" alt="" />
             </button>
             <h2>Create new post</h2>
-            <button
-              onClick={() => {
-                closeModal(false);
-              }}
-              className="button share-btn"
-            >
+            <button onClick={() => { closeModal(false); }} className="button share-btn">
               Share
             </button>
           </div>

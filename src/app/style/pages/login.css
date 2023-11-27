@@ -1,9 +1,12 @@
-.login-page{
+.login-page, .registr-page{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 20px;
+}
+.registr-page{
+    flex-direction: column;
 }
 
 .login-page .card{

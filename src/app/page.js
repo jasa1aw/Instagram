@@ -1,9 +1,10 @@
-import UserLogin from '@/components/auth/userLogin'
+
+import Registration from '@/components/auth/userRegistration'
 export default function Home() {
   return (
     <main>
       <div>
-        <UserLogin />
+        <Registration/>
       </div>
     </main>
   )
