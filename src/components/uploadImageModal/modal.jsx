@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-export default function Modal({ closeModal }) {
+export default function UploadModal({ closeModal }) {
   const [step, setStep] = useState(1);
   const [selectedFile, setSelectedFile] = useState(null);
   const [caption, setCaption] = useState("");
@@ -26,7 +26,7 @@ export default function Modal({ closeModal }) {
 
   return (
     <div className="modalBackground">
-      <button className="button modal-btn" onClick={() => {closeModal(false);}}>
+      <button className="button modal-btn" onClick={() => {closeModal()}}>
         <svg
           aria-label="Close"
           class="x1lliihq x1n2onr6 x9bdzbf"
@@ -116,8 +116,8 @@ export default function Modal({ closeModal }) {
                 alt=""
               />
             </div>
-            <div className="block-item-user">
-              <div className="user">
+            <div className=".block-item-author">
+              <div className="author">
                 <div className="userAvatar modalAvatar">
                   <img src="/img/profile/avatar.jpg" alt="" />
                 </div>

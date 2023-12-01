@@ -1,12 +1,22 @@
 'use client';
 import Posts from '../Posts/posts';
-import Modal from '../selectImageModal/modal';
+import UploadModal from '@/components/uploadImageModal/modal'
+import DetailPost from '../detailPost';
 import { useState } from 'react';
 export default function UserProfile ({user,posts}) {
     const [openModal, setOpenModal] = useState(false)
+    const [selectImg, setSelectImg] = useState()
+    const SelectedPost = (id) =>{
+        setSelectImg(id)
+    }
+    const closeModal = () =>{
+        setOpenModal(false)
+        setSelectImg()
+    }
     return(
         <section className='profile'>
-            {openModal && <Modal closeModal={setOpenModal}/>}
+            {openModal && <UploadModal closeModal={closeModal}/>}
+            {selectImg >= 1 && <DetailPost closeModal={closeModal} posts={posts} step={selectImg} />}
             <div className='userInfo'>
                 <div className='userAvatar'>
                     <img src={user.avatar} alt="avatar" />
@@ -52,7 +62,7 @@ export default function UserProfile ({user,posts}) {
                     <img src="/img/icons/postIcon.svg" alt="" />
                     <h3>POSTS</h3>
                 </div>
-                <Posts posts={posts}/>
+                <Posts posts={posts} SelectedPosts={SelectedPost}/>
             </div>
             <button onClick={() => {setOpenModal(true);}}>Open</button>
         </section>

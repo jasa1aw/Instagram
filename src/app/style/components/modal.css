@@ -74,13 +74,13 @@
     width: 900px;
 }
 
-.uploadPost .block{
+.uploadPost .block, .detailPost .block{
     display: flex;
-    width: calc(65% + 35%);
-    gap: 5px;
-    align-items: center;
+    width: 100%;
     height: 540px;
+    align-items: center;
 }
+
 
 .back-btn, .share-btn{
     background-color: transparent;
@@ -91,14 +91,22 @@
     color: rgb(24, 119, 242);
 }
 
-.block-item-img, .block-item-user{
+.block-item-img, .block-item-author{
     height: 100%;
 }
-.block-item-user{
+.block-item-img{
+    width: 65%;
+}
+.block-item-img img{
+    object-fit: cover;
+    border-radius: 0 0 0 12px;
+}    
+.block-item-author{
+    width: 35%;
     padding: 20px 15px;
 }
 
-.block-item-user .user{
+.block-item-author .author{
     display: flex;
     gap: 15px;
     align-items: center;
@@ -110,7 +118,7 @@
     height: 40px !important;
 }
 
-.emoji{
+.emoji, .comment{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -121,3 +129,41 @@
     height: 30px;
 }
 
+
+/* third */
+.detailPost{
+    width: 80vw;
+    height: 80vh;
+}
+.detailPost .block{
+    width: 100%;
+    height: 100%;
+}
+.detailPost .block-item-img{
+    width: 55%;
+}
+.detailPost .block-item-author{
+    width: 45%;
+}
+.detailPost .block-item-img img{
+    border-radius: 12px 0 0 12px;
+} 
+.user{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.detailPost .block-item-author .author{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.comments{
+    height: 390px;
+    overflow-y: scroll;
+}
+.inputComment{
+    display: flex;
+    gap: 10px;
+}

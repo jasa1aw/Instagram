@@ -1,6 +1,7 @@
-
-export default function Post({imgSrc, description}){
+'use client'
+export default function Post({post, SelectedPost}){
     return(
-        <img src={imgSrc} alt={description}/>
+        <img src={post.url} alt={post.description} onClick={() => SelectedPost(post.id)}/>
+        
     )
 }

@@ -15,26 +15,32 @@ export default function Profile() {
     }
   let userPost = [
     {
+      id: 1,
       url: '/img/profile/posts/post1.svg',
       description: 1
     },
     {
+      id: 2,
       url: '/img/profile/posts/post2.svg',
       description: 2
     },
     {
+      id: 3,
       url: '/img/profile/posts/post3.svg',
       description: 3
     },
     {
+      id: 4,
       url: '/img/profile/posts/post4.svg',
       description: 4
     },
     {
+      id: 5,
       url: '/img/profile/posts/post5.svg',
       description: 5
     },
     {
+      id: 6,
       url: '/img/profile/posts/post6.svg',
       description: 6
     },
