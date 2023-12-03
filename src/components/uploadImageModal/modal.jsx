@@ -29,14 +29,10 @@ export default function UploadModal({ closeModal }) {
       <button className="button modal-btn" onClick={() => {closeModal()}}>
         <svg
           aria-label="Close"
-          class="x1lliihq x1n2onr6 x9bdzbf"
           fill="currentColor"
-          height="18"
-          role="img"
-          viewBox="0 0 24 24"
-          width="18"
+          height="25"
+          width="26"
         >
-          <title>Close</title>
           <polyline
             fill="none"
             points="20.643 3.357 12 12 3.353 20.647"
@@ -66,15 +62,10 @@ export default function UploadModal({ closeModal }) {
           <div className="body">
             <div className="modalIcon">
               <svg
-                aria-label="Icon to represent media such as images or videos"
-                class="x1lliihq x1n2onr6 x5n08af"
                 fill="currentColor"
                 height="77"
-                role="img"
-                viewBox="0 0 97.6 77.3"
                 width="96"
               >
-                <title>Icon to represent media such as images or videos</title>
                 <path
                   d="M16.3 24h.3c2.8-.2 4.9-2.6 4.8-5.4-.2-2.8-2.6-4.9-5.4-4.8s-4.9 2.6-4.8 5.4c.1 2.7 2.4 4.8 5.1 4.8zm-2.4-7.2c.5-.6 1.3-1 2.1-1h.2c1.7 0 3.1 1.4 3.1 3.1 0 1.7-1.4 3.1-3.1 3.1-1.7 0-3.1-1.4-3.1-3.1 0-.8.3-1.5.8-2.1z"
                   fill="currentColor"
@@ -113,7 +104,7 @@ export default function UploadModal({ closeModal }) {
               <img
                 className="img"
                 src={URL.createObjectURL(selectedFile)}
-                alt=""
+                alt="not found"
               />
             </div>
             <div className=".block-item-author">

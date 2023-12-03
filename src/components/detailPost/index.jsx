@@ -1,19 +1,15 @@
 "use client";
 import { useState } from "react";
 export default function DetailPost({posts, closeModal, step}) {
-//   const [step, setStep] = useState(1);
   const SelectPost = step;
   console.log(SelectPost);
   return (
     <div className="modalBackground">
       <button className="button modal-btn" onClick={() => {closeModal(false);}}>
         <svg
-          aria-label="Close"
-          class="x1lliihq x1n2onr6 x9bdzbf"
           fill="currentColor"
           height="18"
           role="img"
-          viewBox="0 0 24 24"
           width="18"
         >
           <title>Close</title>
@@ -37,7 +33,7 @@ export default function DetailPost({posts, closeModal, step}) {
             y2="3.354"
           ></line>
         </svg>
-      </button>(
+      </button>
         <div className="modalContainer detailPost">
           <div className="block">
             <div className="block-item-img ">
@@ -152,7 +148,6 @@ export default function DetailPost({posts, closeModal, step}) {
             </div>
           </div>
         </div>
-      )
     </div>
   );
 }

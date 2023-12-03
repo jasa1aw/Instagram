@@ -2,6 +2,7 @@
 import Posts from '../Posts/posts';
 import UploadModal from '@/components/uploadImageModal/modal'
 import DetailPost from '../detailPost';
+import Navbar from './navMenu';
 import { useState } from 'react';
 export default function UserProfile ({user,posts}) {
     const [openModal, setOpenModal] = useState(false)
@@ -13,8 +14,12 @@ export default function UserProfile ({user,posts}) {
         setOpenModal(false)
         setSelectImg()
     }
+    const modalOpen = () =>{
+        setOpenModal(true)
+    }
     return(
         <section className='profile'>
+            <Navbar openModal={modalOpen}/>
             {openModal && <UploadModal closeModal={closeModal}/>}
             {selectImg >= 1 && <DetailPost closeModal={closeModal} posts={posts} step={selectImg} />}
             <div className='userInfo'>
@@ -64,7 +69,7 @@ export default function UserProfile ({user,posts}) {
                 </div>
                 <Posts posts={posts} SelectedPosts={SelectedPost}/>
             </div>
-            <button onClick={() => {setOpenModal(true);}}>Open</button>
+            {/* <button onClick={() => {setOpenModal(true);}}>Open</button> */}
         </section>
     )
 }
