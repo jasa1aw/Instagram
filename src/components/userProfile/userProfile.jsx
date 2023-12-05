@@ -69,7 +69,6 @@ export default function UserProfile ({user,posts}) {
                 </div>
                 <Posts posts={posts} SelectedPosts={SelectedPost}/>
             </div>
-            {/* <button onClick={() => {setOpenModal(true);}}>Open</button> */}
         </section>
     )
 }

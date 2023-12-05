@@ -53,3 +53,40 @@
 .navProfile>img{
     border-radius: 50%;
 }
+
+/* Suggest navbar */
+.suggestNav{
+    width: 20%;
+    position: absolute;
+    right: 20px;
+    left: unset;
+    padding: 5px 0;
+    margin-top: 3px;
+    margin-right: 60px;
+    border: none;
+}
+.switchBlock{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.switchBlock>button{
+    font-size: 14px;
+    font-weight: 500;
+    color: #1FA2F7;
+}
+.switchBlock>button:hover{
+    color: #103E5C;
+}
+.switchItem{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 45px;
+    height: 45px;
+}
+.switchItem>p{
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+}
