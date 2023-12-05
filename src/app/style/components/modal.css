@@ -132,8 +132,8 @@
 
 /* third */
 .detailPost{
-    width: 80vw;
-    height: 80vh;
+    width: 70vw;
+    height: 90vh;
 }
 .detailPost .block{
     width: 100%;
@@ -163,7 +163,7 @@
     height: 390px;
     overflow-y: scroll;
 }
-.inputComment{
+.addComment{
     display: flex;
     gap: 10px;
 }

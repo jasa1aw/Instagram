@@ -7,9 +7,9 @@ export default function Profile() {
         avatar:"/img/profile/avatar.jpg",
         username:"Shalame",
         stats:{
-            posts:169,
-            followers:499,
-            following:1253
+            posts:6,
+            followers:7,
+            following:9
         },
         bio:"Timoti"
     }

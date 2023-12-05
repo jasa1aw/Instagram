@@ -1,16 +1,33 @@
 "use client";
 import { useState } from "react";
 export default function DetailPost({posts, closeModal, step}) {
+  const [AllComments,SetAllComments] = useState([])
+  const [delComment,setdelComment] = useState({})
+  const addCommentsToPost = (item) =>{
+      SetAllComments([...AllComments,item])
+  }
+  const Removecomment = (comment) =>{
+      let Remove= [...AllComments]
+      let index = AllComments.indexOf(comment)
+      Remove.splice(index,1)
+      SetAllComments(Remove)
+  }
+  const [inputvalue,Setinputvalue] = useState('')
+  const save = () =>{
+    const comments = {
+        inputvalue
+    }
+    addCommentsToPost(comments)
+    Setinputvalue('')
+  }
   const SelectPost = step;
-  console.log(SelectPost);
   return (
     <div className="modalBackground">
       <button className="button modal-btn" onClick={() => {closeModal(false);}}>
         <svg
           fill="currentColor"
-          height="18"
-          role="img"
-          width="18"
+          height="25"
+          width="26"
         >
           <title>Close</title>
           <polyline
@@ -54,96 +71,28 @@ export default function DetailPost({posts, closeModal, step}) {
                 </button>
               </div>
               <div className="comments">
-                <div className="comment">
+                {AllComments.length > 0 && AllComments.map((item, index) =>(
+                  <div className="comment" key={index}>
                   <div className="user">
                       <div className="userAvatar modalAvatar">
                         <img src="/img/profile/avatar.jpg" alt="" />
                       </div>
                       <h3>Username</h3>
-                      <p></p>
+                      <p>{item.inputvalue}</p>
                     </div>
+                    <button onClick={() => {Removecomment(setdelComment)}}>Удалить</button>
                     <button className='more-btn button'>
                       like
                     </button>
                 </div>
-                <div className="comment">
-                  <div className="user">
-                      <div className="userAvatar modalAvatar">
-                        <img src="/img/profile/avatar.jpg" alt="" />
-                      </div>
-                      <h3>Username</h3>
-                      <p></p>
-                    </div>
-                    <button className='more-btn button'>
-                      like
-                    </button>
-                </div>
-                <div className="comment">
-                  <div className="user">
-                      <div className="userAvatar modalAvatar">
-                        <img src="/img/profile/avatar.jpg" alt="" />
-                      </div>
-                      <h3>Username</h3>
-                      <p></p>
-                    </div>
-                    <button className='more-btn button'>
-                      like
-                    </button>
-                </div>
-                <div className="comment">
-                  <div className="user">
-                      <div className="userAvatar modalAvatar">
-                        <img src="/img/profile/avatar.jpg" alt="" />
-                      </div>
-                      <h3>Username</h3>
-                      <p></p>
-                    </div>
-                    <button className='more-btn button'>
-                      like
-                    </button>
-                </div>
-                <div className="comment">
-                  <div className="user">
-                      <div className="userAvatar modalAvatar">
-                        <img src="/img/profile/avatar.jpg" alt="" />
-                      </div>
-                      <h3>Username</h3>
-                      <p></p>
-                    </div>
-                    <button className='more-btn button'>
-                      like
-                    </button>
-                </div>
-                <div className="comment">
-                  <div className="user">
-                      <div className="userAvatar modalAvatar">
-                        <img src="/img/profile/avatar.jpg" alt="" />
-                      </div>
-                      <h3>Username</h3>
-                      <p></p>
-                    </div>
-                    <button className='more-btn button'>
-                      like
-                    </button>
-                </div>
-                <div className="comment">
-                  <div className="user">
-                      <div className="userAvatar modalAvatar">
-                        <img src="/img/profile/avatar.jpg" alt="" />
-                      </div>
-                      <h3>Username</h3>
-                      <p></p>
-                    </div>
-                    <button className='more-btn button'>
-                      like
-                    </button>
-                </div>
+                ))}
               </div>
-              <div className="inputComment">
+              <div className="addComment">
                 <div className="emoji-img">
                   <img className="img" src="/img/icons/smile.svg" alt="" />
                 </div>
-                <input type="text" />
+                <input type="text" placeholder="Add comment..." onChange={(e) => Setinputvalue(e.target.value)} value={inputvalue}/>
+                <button onClick={save}>Post</button>
               </div>
             </div>
           </div>
