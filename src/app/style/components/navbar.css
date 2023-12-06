@@ -9,6 +9,7 @@
     border-right: .5px solid  #DCDCDC;
     padding: 20px 15px;
     background-color: #fff;
+    z-index: 2;
 }
 .logo{
     width: 60%;

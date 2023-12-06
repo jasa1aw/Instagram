@@ -107,7 +107,7 @@ export default function UploadModal({ closeModal }) {
                 alt="not found"
               />
             </div>
-            <div className=".block-item-author">
+            <div className="block-item-author">
               <div className="author">
                 <div className="userAvatar modalAvatar">
                   <img src="/img/profile/avatar.jpg" alt="" />

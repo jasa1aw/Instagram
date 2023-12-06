@@ -1,6 +1,7 @@
-.profile{
-    /* margin: 60px 0; */
-}
+/* .profile{
+    margin: 60px 0; 
+} */
+
 .userInfo, .username, .contentAbout, .highlights{
     display: flex;
     align-items: center;
@@ -47,7 +48,7 @@
     object-fit: cover;
 }
 
-.more-btn{
+.more-btn, .removeCom{
     display: flex;
     justify-content: center;
     align-items: center;
