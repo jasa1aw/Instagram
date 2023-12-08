@@ -3,25 +3,34 @@ import Posts from '../Posts/posts';
 import UploadModal from '@/components/uploadImageModal/modal'
 import DetailPost from '../detailPost';
 import Navbar from './navMenu';
+import FollowersModal from '../SocialNet/followers';
+import FollowingModal from '../SocialNet/following';
 import { useState } from 'react';
-export default function UserProfile ({user,posts}) {
-    const [openModal, setOpenModal] = useState(false)
-    const [selectImg, setSelectImg] = useState()
+export default function UserProfile ({user,posts,followers,following}) {
+    const [openModal, setOpenModal] = useState(false);
+    const [OpenFollowersModal, SetOpenFollowersModal] = useState(false);
+    const [OpenFollowingModal, SetOpenFollowingModal] = useState(false)
+    const [selectImg, setSelectImg] = useState();
     const SelectedPost = (id) =>{
         setSelectImg(id)
     }
     const closeModal = () =>{
         setOpenModal(false)
+        SetOpenFollowersModal(false)
+        SetOpenFollowingModal(false)
         setSelectImg()
     }
     const modalOpen = () =>{
-        setOpenModal(true)
+        setOpenModal(true) 
     }
+
     return(
         <section className='profile'>
             <Navbar openModal={modalOpen}/>
             {openModal && <UploadModal closeModal={closeModal}/>}
             {selectImg >= 1 && <DetailPost closeModal={closeModal} posts={posts} step={selectImg} />}
+            {OpenFollowersModal && <FollowersModal closeModal={closeModal} followers={followers}/>}
+            {OpenFollowingModal && <FollowingModal closeModal={closeModal} following={following}/>}
             <div className='userInfo'>
                 <div className='userAvatar'>
                     <img src={user.avatar} alt="avatar" />
@@ -34,7 +43,7 @@ export default function UserProfile ({user,posts}) {
                         <button className='addUser-btn button'>
                             <img src="/img/icons/addUser.svg" alt="" />
                         </button>
-                        <button className='more-btn button'>
+                        <button className='more-btn button' >
                             <div className='circle-more'></div>
                             <div className='circle-more'></div>
                             <div className='circle-more'></div>
@@ -42,8 +51,8 @@ export default function UserProfile ({user,posts}) {
                     </div>
                     <div className='contentAbout'>
                         <p>{user.stats.posts} post</p>
-                        <p>{user.stats.followers} followers</p>
-                        <p>{user.stats.following} following</p>
+                        <p onClick={() => SetOpenFollowersModal(true)}>{user.stats.followers} followers</p>
+                        <p onClick={() => SetOpenFollowingModal(true)}>{user.stats.following} following</p>
                     </div>
                     <div className='bio'>
                         <h2>{user.bio}</h2>

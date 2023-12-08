@@ -8,8 +8,8 @@ export default function Profile() {
         username:"Shalame",
         stats:{
             posts:6,
-            followers:7,
-            following:9
+            followers:5,
+            following:5
         },
         bio:"Timoti"
     }
@@ -45,9 +45,63 @@ export default function Profile() {
       description: 6
     },
   ]
+  let followers = [
+    {
+      avatar: '/img/profile/posts/post1.svg',
+      username: 'Michel',
+      bio: 'study'
+    },
+    {
+      avatar: '/img/profile/posts/post2.svg',
+      username: 'Madi',
+      bio: 'study'
+    },
+    {
+      avatar: '/img/profile/posts/post3.svg',
+      username: 'Bob',
+      bio: 'study'
+    },
+    {
+      avatar: '/img/profile/posts/post4.svg',
+      username: 'Danny',
+      bio: 'study'
+    },
+    {
+      avatar: '/img/profile/posts/post5.svg',
+      username: 'Kena',
+      bio: 'study'
+    },
+  ]
+  let following = [
+    {
+      avatar: '/img/profile/posts/post1.svg',
+      username: 'Michel',
+      bio: 'study'
+    },
+    {
+      avatar: '/img/profile/posts/post2.svg',
+      username: 'Madi',
+      bio: 'study'
+    },
+    {
+      avatar: '/img/profile/posts/post3.svg',
+      username: 'Bob',
+      bio: 'study'
+    },
+    {
+      avatar: '/img/profile/posts/post4.svg',
+      username: 'Danny',
+      bio: 'study'
+    },
+    {
+      avatar: '/img/profile/posts/post5.svg',
+      username: 'Kena',
+      bio: 'study'
+    },
+  ]
   return (
     <div>
-      <UserProfile user={user} posts={userPost}/>
+      <UserProfile user={user} posts={userPost} followers={followers} following={following}/>
       <Footer/>
     </div>
   )

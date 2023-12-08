@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
+    z-index: 3;
 }
 .modal-btn{
     position: fixed;
@@ -29,7 +29,7 @@
     flex-direction: column;
 }
 
-.modalContainer .title{
+.title{
     border-bottom: 1px solid rgb(115, 115, 115);
     padding: 15px;
     display: flex;
@@ -42,6 +42,19 @@
 .modalContainer .title h2{
     font-size: 18px;
     font-weight: 600;
+}
+.title3{
+    justify-content: space-between;
+    padding: 5px;
+}
+.title3 h2{
+    font-weight: 500;
+    margin-left: 150px;
+}
+.title3 .closeModal{
+    background-color: transparent;
+    display: flex;
+    align-items: center;
 }
 .modalContainer .body{
     display: flex;

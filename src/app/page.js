@@ -1,12 +1,10 @@
-
+'use client'
 import Registration from '@/components/auth/userRegistration';
-import Home from '@/components/Home/home';
-export default function Main() {
+export default function SignUp() {
   return (
     <main>
       <div>
-        {/* <Registration/> */}
-        <Home/>
+        <Registration/>
       </div>
     </main>
   )
