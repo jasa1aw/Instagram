@@ -7,7 +7,7 @@
     justify-content: space-between;
     gap: 0;
 }
-.HomeItemImg{
+.HomeItemImg, .storyitemImg{
     width: 100%;
 }
 .HomeItemImg img{

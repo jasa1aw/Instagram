@@ -3,17 +3,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
 import Navbar from '../userProfile/navMenu';
 import SuggestNavbar from './suggestNav';
+import Stories from "../Stories/stories";
+import DetailStory from "../detailStory";
 import { useState } from 'react';
-export default function Home () {
+export default function Home ({stories}) {
     const [openModal, setOpenModal] = useState(false);
     const modalOpen = () =>{
         setOpenModal(true)
     }
+    const closeModal = () =>{
+        setSelectStory()
+    }
+    const [selectStory, setSelectStory] = useState();
+    const SelectedStory = (id) =>{
+        setSelectStory(id)
+    }
+
     return(
         <section className='home'>\
             <Navbar openModal={modalOpen}/>
+            {selectStory >= 1 && <DetailStory closeModal={closeModal} stories={stories} step={selectStory} />}
             <div className='stories highlights'>
-                <div className='story highlight'>
+                <Stories stories={stories} SelectedStories={SelectedStory}/>
+                {/* <div className='story highlight'>
                     <img src="" alt="" />
                     <p>username</p>
                 </div>
@@ -44,7 +56,7 @@ export default function Home () {
                 <div className='story highlight'>
                     <img src="" alt="" />
                     <p>username</p>
-                </div>
+                </div> */}
             </div>
             <div className='mainHomeBlock'>
 
