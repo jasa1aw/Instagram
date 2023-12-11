@@ -1,6 +1,5 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import {faBookmark} from "@fortawesome/free-classic-svg-icons"
 import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 export default function DetailPost({posts, closeModal, step}) {

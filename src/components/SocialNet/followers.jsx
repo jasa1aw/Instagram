@@ -17,8 +17,8 @@ export default function FollowersModal({ closeModal, followers }) {
                     <input className="input search-followers" type="text" placeholder="Search"/>
                 </div>
                 <div className="followers">
-                    {followers.map(follower =>(
-                        <div className="follower">
+                    {followers.map((follower,index) =>(
+                        <div className="follower" key={index}>
                             <div className="user">
                                 <div className="followerAvatar">
                                     <img className="imgCircle" src={follower.avatar} alt="" />

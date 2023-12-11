@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -21,10 +22,12 @@ export default function Navbar({openModal}) {
         <img className='img' src="/img/icons/logo.svg" alt="" />
       </div>
       <ul>
-        <li>
-            <FontAwesomeIcon icon={faHouse} className="navIcon"/>
-            Home
-        </li>
+        <Link href={'/home'}>
+          <li>
+              <FontAwesomeIcon icon={faHouse} className="navIcon"/>
+              Home
+          </li>
+        </Link>
         <li>
             <FontAwesomeIcon icon={faMagnifyingGlass} className="navIcon"/>
             Search
@@ -66,12 +69,15 @@ export default function Navbar({openModal}) {
             <FontAwesomeIcon icon={faSquarePlus} className="navIcon"/>
             Create
         </li>
-        <li>
-            <div className="navProfile navIcon">
+        <Link href={'/profile'}>
+          <li>
+              <div className="navProfile navIcon">
                 <img className="img" src="/img/profile/avatar.jpg" alt="avatar" />
-            </div>
-            Profile
-        </li>
+              </div>
+              Profile
+          </li>
+        </Link>
+        
       </ul>
       <ul>
         <li>
