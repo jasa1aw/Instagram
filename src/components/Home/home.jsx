@@ -23,41 +23,8 @@ export default function Home ({stories}) {
         <section className='home'>\
             <Navbar openModal={modalOpen}/>
             {selectStory >= 1 && <DetailStory closeModal={closeModal} stories={stories} step={selectStory} />}
-            <div className='stories highlights'>
                 <Stories stories={stories} SelectedStories={SelectedStory}/>
-                {/* <div className='story highlight'>
-                    <img src="" alt="" />
-                    <p>username</p>
-                </div>
-                <div className='story highlight'>
-                    <img src="" alt="" />
-                    <p>username</p>
-                </div>
-                <div className='story highlight'>
-                    <img src="" alt="" />
-                    <p>username</p>
-                </div>
-                <div className='story highlight'>
-                    <img src="" alt="" />
-                    <p>username</p>
-                </div>
-                <div className='story highlight'>
-                    <img src="" alt="" />
-                    <p>username</p>
-                </div>
-                <div className='story highlight'>
-                    <img src="" alt="" />
-                    <p>username</p>
-                </div>
-                <div className='story highlight'>
-                    <img src="" alt="" />
-                    <p>username</p>
-                </div>
-                <div className='story highlight'>
-                    <img src="" alt="" />
-                    <p>username</p>
-                </div> */}
-            </div>
+                
             <div className='mainHomeBlock'>
 
                 <div className="block-item-author">

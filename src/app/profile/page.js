@@ -101,6 +101,7 @@ export default function Profile() {
   ]
   return (
     <div>
+      
       <UserProfile user={user} posts={userPost} followers={followers} following={following}/>
       <Footer/>
     </div>

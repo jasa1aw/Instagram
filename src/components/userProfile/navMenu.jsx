@@ -22,7 +22,7 @@ export default function Navbar({openModal}) {
         <img className='img' src="/img/icons/logo.svg" alt="" />
       </div>
       <ul>
-        <Link href={'/home'}>
+        <Link href={'/home'} style={{color: "#000"}}>
           <li>
               <FontAwesomeIcon icon={faHouse} className="navIcon"/>
               Home
@@ -69,7 +69,7 @@ export default function Navbar({openModal}) {
             <FontAwesomeIcon icon={faSquarePlus} className="navIcon"/>
             Create
         </li>
-        <Link href={'/profile'}>
+        <Link href={'/profile'} style={{color: "#000"}}>
           <li>
               <div className="navProfile navIcon">
                 <img className="img" src="/img/profile/avatar.jpg" alt="avatar" />
