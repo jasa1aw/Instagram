@@ -1,6 +1,25 @@
 'use client';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { SignUp, authorize } from '@/app/store/slices/authSlice';
+
 export default function Registration () {
+    const isAuth = useSelector((state) => state.auth.isAuth)
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const [email, setEmail] = useState('');
+    const [full_name, setFull_name] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const SignIn = () => {
+        dispatch(SignUp(email, full_name, username, password));
+        if(email.length > 0 && full_name.length > 0 && username.length>0 && password.length > 0){
+            router.push('/login')
+        }
+    }
     return(
         <section className="login-page registr-page">
             <div className="card">
@@ -18,10 +37,10 @@ export default function Registration () {
                     <hr/>
                 </div>
                 <form>
-                    <input className='input' placeholder='Mobile Number or Email'/>
-                    <input className='input' placeholder='Full Name'/>
-                    <input className='input' placeholder='Username'/>
-                    <input className='input' placeholder='Password'/>
+                    <input className='input' placeholder='Mobile Number or Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input className='input' placeholder='Full Name' value={full_name} onChange={(e) => setFull_name(e.target.value)}/>
+                    <input className='input' placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <input className='input' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <p className='privace-sub'>
                         People who use our service may have uploaded 
                         your contact information to Instagram. 
@@ -33,7 +52,7 @@ export default function Registration () {
                         and 
                         <Link href={''}> Cookies Policy</Link>.
                     </p>
-                    <button className='button button-primary'>Sign up</button>                           
+                    <button className='button button-primary' type='button' onClick={SignIn}>Sign up</button>                           
                     <a href=''>Забыли пароль?</a>
                 </form>
             </div>

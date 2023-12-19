@@ -1,6 +1,22 @@
 'use client';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import {LogIn, authorize } from '@/app/store/slices/authSlice';
 export default function UserLogin () {
+    const isAuth = useSelector((state) => state.auth.isAuth)
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const Login = () => {
+        dispatch(LogIn(email,password));
+        if(email.length > 0 && password.length > 0){
+            router.push('/profile')
+        }
+    }
     return(
         <section className="login-page">
             <div className='home-phone-img'>
@@ -12,9 +28,9 @@ export default function UserLogin () {
                             <img src="/img/icons/logo.svg" alt="" />
                         </div>
                         <form>
-                            <input className='input' placeholder='Phone number, username, or email'/>
-                            <input className='input' placeholder='Password'/>
-                            <button className='button button-primary'>Log in</button>
+                            <input className='input' placeholder='Phone number, username, or email' value={email} onChange={(e) => setEmail(e.target.value)}/>
+                            <input className='input' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <button className='button button-primary' type='button' onClick={Login}>Log in</button>
                             <div className='lines'>
                                 <hr/>
                                 <h2>OR</h2>
