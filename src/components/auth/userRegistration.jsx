@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { SignUp, authorize } from '@/app/store/slices/authSlice';
@@ -15,11 +15,16 @@ export default function Registration () {
     const [password, setPassword] = useState('');
 
     const SignIn = () => {
-        dispatch(SignUp(email, full_name, username, password));
         if(email.length > 0 && full_name.length > 0 && username.length>0 && password.length > 0){
+            dispatch(SignUp(email, full_name, username, password));
             router.push('/login')
         }
     }
+
+    useEffect(() => {
+        if(isAuth) router.push('/profile')
+    }, [isAuth])
+
     return(
         <section className="login-page registr-page">
             <div className="card">
@@ -40,7 +45,7 @@ export default function Registration () {
                     <input className='input' placeholder='Mobile Number or Email' value={email} onChange={(e) => setEmail(e.target.value)}/>
                     <input className='input' placeholder='Full Name' value={full_name} onChange={(e) => setFull_name(e.target.value)}/>
                     <input className='input' placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)}/>
-                    <input className='input' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <input className='input'  placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <p className='privace-sub'>
                         People who use our service may have uploaded 
                         your contact information to Instagram. 

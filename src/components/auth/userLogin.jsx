@@ -12,8 +12,8 @@ export default function UserLogin () {
     const [password, setPassword] = useState('');
 
     const Login = () => {
-        dispatch(LogIn(email,password));
         if(email.length > 0 && password.length > 0){
+            dispatch(LogIn(email,password));
             router.push('/profile')
         }
     }
