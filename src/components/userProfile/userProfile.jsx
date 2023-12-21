@@ -5,8 +5,25 @@ import DetailPost from '../detailPost';
 import Navbar from './navMenu';
 import FollowersModal from '../SocialNet/followers';
 import FollowingModal from '../SocialNet/following';
-import { useState } from 'react';
-export default function UserProfile ({user,posts,followers,following}) {
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getMyPosts , CreatePost} from '@/app/store/slices/postSlice';
+export default function UserProfile ({user,followers,following}) {
+    const dispatch = useDispatch()
+    const posts = useSelector((state) => state.post.posts)
+    const didMount = () =>{
+        dispatch(getMyPosts())
+    }
+    useEffect(didMount,[])
+    // console.log(posts);
+    const onSelect = (image,description) => {
+        const form = new FormData();
+        form.append('image', image);
+        form.append('description', description)
+        dispatch(CreatePost(form))
+        console.log(`form: ${form}`);
+    }
+
     const [openModal, setOpenModal] = useState(false);
     const [OpenFollowersModal, SetOpenFollowersModal] = useState(false);
     const [OpenFollowingModal, SetOpenFollowingModal] = useState(false)
@@ -27,7 +44,7 @@ export default function UserProfile ({user,posts,followers,following}) {
     return(
         <section className='profile'>
             <Navbar openModal={modalOpen}/>
-            {openModal && <UploadModal closeModal={closeModal}/>}
+            {openModal && <UploadModal closeModal={closeModal} onSelect={onSelect}/>}
             {selectImg >= 1 && <DetailPost closeModal={closeModal} posts={posts} step={selectImg} />}
             {OpenFollowersModal && <FollowersModal closeModal={closeModal} followers={followers}/>}
             {OpenFollowingModal && <FollowingModal closeModal={closeModal} following={following}/>}
