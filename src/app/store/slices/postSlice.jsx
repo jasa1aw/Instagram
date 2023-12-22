@@ -12,8 +12,9 @@ export const postSlice = createSlice({
             state.posts = action.payload.posts
         },
         appendMyPosts:(state,action) => {
-            state.posts = [...state.posts,action.payload.posts]
+            state.posts = [...state.posts,...action.payload.posts]
         },
+        
 
     }
 })

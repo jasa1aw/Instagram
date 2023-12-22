@@ -66,6 +66,10 @@
 .contentAbout{
     gap: 30px;
 }
+.contentAbout p{
+    color: #000;
+    cursor: pointer;
+}
 
 
 .highlights{

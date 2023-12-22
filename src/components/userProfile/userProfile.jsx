@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMyPosts , CreatePost} from '@/app/store/slices/postSlice';
 export default function UserProfile ({user,followers,following}) {
     const dispatch = useDispatch()
+    const currentUser = useSelector((state) => state.auth.currentUser)
     const posts = useSelector((state) => state.post.posts)
     const didMount = () =>{
         dispatch(getMyPosts())
@@ -54,7 +55,7 @@ export default function UserProfile ({user,followers,following}) {
                 </div>
                 <div className='userAbout'>
                     <div className='username'>
-                        <h3>{user.username}</h3>
+                        <h3>{currentUser.full_name}</h3>
                         <button className='follow-btn button button-primary'>Follow</button>
                         <button className='message-btn button'>Message</button>
                         <button className='addUser-btn button'>
@@ -67,12 +68,12 @@ export default function UserProfile ({user,followers,following}) {
                         </button>
                     </div>
                     <div className='contentAbout'>
-                        <p>{user.stats.posts} post</p>
+                        <p>{posts.length} post</p>
                         <p onClick={() => SetOpenFollowersModal(true)}>{user.stats.followers} followers</p>
                         <p onClick={() => SetOpenFollowingModal(true)}>{user.stats.following} following</p>
                     </div>
                     <div className='bio'>
-                        <h2>{user.bio}</h2>
+                        <h2>{currentUser.username}</h2>
                     </div>
                 </div>
             </div>
