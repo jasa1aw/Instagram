@@ -1,7 +1,12 @@
 'use client'
 import UserProfile from '@/components/userProfile/userProfile'
 import Footer from '@/components/Footer/footer'
+import { useEffect} from 'react';
+import { useSelector} from 'react-redux';
+import { useRouter } from 'next/navigation';
 export default function Profile() {
+  
+
   let user =
     {
         avatar:"/img/profile/avatar.jpg",

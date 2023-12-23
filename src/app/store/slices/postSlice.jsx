@@ -12,7 +12,7 @@ export const postSlice = createSlice({
             state.posts = action.payload.posts
         },
         appendMyPosts:(state,action) => {
-            state.posts = [...state.posts,...action.payload.posts]
+            state.posts = [...state.posts, action.payload.posts]
         },
         
 
@@ -26,7 +26,7 @@ export const getMyPosts = () => async(dispatch) =>{
     try {
         const res = await axios.get(`${END_POINT}/api/post/getAllUserPosts`)
         dispatch(setMyPosts({posts:res.data}))
-        console.log('res' + res);
+        // console.log('res' + res);
     } catch (error) {
         alert("Ошибка при запросе пожалуйста сообщите об ошибке")
     }
@@ -35,7 +35,7 @@ export const getMyPosts = () => async(dispatch) =>{
 
 export const CreatePost = (data) => async(dispatch) => {
     axios.post(`${END_POINT}/api/post/newPost`, data).then((res) => {
-        dispatch(appendMyPosts({posts:res.data}))
+        dispatch(appendMyPosts({posts: res.data}))
         console.log('Server response:', res.data);
     }).catch((error) => {
         console.error('Error submitting form:', error);

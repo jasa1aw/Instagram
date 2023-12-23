@@ -29,6 +29,7 @@ export default function UserProfile ({user,followers,following}) {
     const [OpenFollowersModal, SetOpenFollowersModal] = useState(false);
     const [OpenFollowingModal, SetOpenFollowingModal] = useState(false)
     const [selectImg, setSelectImg] = useState();
+    
     const SelectedPost = (id) =>{
         setSelectImg(id)
     }

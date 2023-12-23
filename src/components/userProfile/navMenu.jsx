@@ -1,23 +1,20 @@
 "use client";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHouse,
-  faMagnifyingGlass,
-  faClapperboard,
-  faBars,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  faCompass,
-  faHeart,
-  faSquarePlus,
-} from "@fortawesome/free-regular-svg-icons";
+import { faHouse, faMagnifyingGlass, faClapperboard, faBars,} from "@fortawesome/free-solid-svg-icons";
+import {faCompass,faHeart,faSquarePlus,} from "@fortawesome/free-regular-svg-icons";
 import { faThreads } from "@fortawesome/free-brands-svg-icons";
+import MoreModal from "../navMenuModal/navModal";
 
 import { useState } from "react";
 export default function Navbar({openModal}) {
+  const [openMore, setOpenMore] = useState(false);
+  const toggleModal = () => {
+    setOpenMore(!openMore);
+  };
   return (
     <nav className="navbar">
+      {openMore && <MoreModal />}
       <div className="logo">
         <img className='img' src="/img/icons/logo.svg" alt="" />
       </div>
@@ -84,7 +81,7 @@ export default function Navbar({openModal}) {
             <FontAwesomeIcon icon={faThreads} className="navIcon"/>
             Threads
         </li>
-        <li>
+        <li className="moreBtn" onClick={() => toggleModal()}>
             <FontAwesomeIcon icon={faBars} className="navIcon"/>
             More
         </li>
