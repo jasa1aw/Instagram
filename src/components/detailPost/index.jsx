@@ -1,11 +1,21 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
+import { END_POINT } from "@/config/end_point";
 import { useState } from "react";
-export default function DetailPost({posts, closeModal, step}) {
-  const [AllComments,SetAllComments] = useState([])
-  const [DelComment,SetDelComment] = useState({})
-  const [OpenRemoveModal,SetOpenRemoveModal] = useState(false)
+import { useSelector, useDispatch } from 'react-redux';
+import { deletePost } from "@/app/store/slices/postSlice";
+import { useRouter } from 'next/navigation';
+export default function DetailPost({post, closeModal}) {
+  
+  const dispatch = useDispatch()
+  const currentUser = useSelector((state) => state.auth.currentUser)
+
+  const [AllComments,SetAllComments] = useState([]);
+  const [DelComment,SetDelComment] = useState({});
+  const [moreCommentModal,setMoreCommentModal] = useState(false);
+  const [settingModal, setSettingModal] = useState(false);
+
   const addCommentsToPost = (item) =>{
       SetAllComments([...AllComments,item])
   }
@@ -23,16 +33,31 @@ export default function DetailPost({posts, closeModal, step}) {
     addCommentsToPost(comments)
     SetInputValue('')
   }
-  const SelectPost = step;
+
   return (
     <div className="modalBackground">
-      {OpenRemoveModal == true && <div className="removeModal">
+      {moreCommentModal == true && <div className="removeModal">
         <div className="removeBtns">
           <button className="removeBtn button">Report</button>
-          <button className="removeBtn button" onClick={() => {Removecomment(DelComment); SetOpenRemoveModal(false)}}>Delete</button>
-          <button className="removeBtn button" onClick={() => {SetOpenRemoveModal(false);}}>Cancel</button>
+          <button className="removeBtn button" onClick={() => {Removecomment(DelComment); setMoreCommentModal(false)}}>Delete</button>
+          <button className="removeBtn button" onClick={() => {setMoreCommentModal(false);}}>Cancel</button>
         </div>
       </div>}
+      {settingModal == true && <div className="removeModal">
+        <div className="removeBtns settingBtns">
+          <button className="settingBtn button" type='button' onClick={() => {dispatch(deletePost(post.id)), closeModal(false)}}>Delete</button>
+          <button className="settingBtn button">Edit</button>
+          <button className="settingBtn button">Hide like count</button>
+          <button className="settingBtn button">Turn off commenting</button>
+          <button className="settingBtn button">Go to post</button>
+          <button className="settingBtn button">Share to...</button>
+          <button className="settingBtn button">Copy link</button>
+          <button className="settingBtn button">Embed</button>
+          <button className="settingBtn button">About this account</button>
+          <button className="settingBtn button" onClick={() => {setSettingModal(false);}}>Cancel</button>
+        </div>
+      </div>}
+
       <button className="button modal-btn" onClick={() => {closeModal(false);}}>
         <svg
           fill="currentColor"
@@ -64,7 +89,7 @@ export default function DetailPost({posts, closeModal, step}) {
         <div className="modalContainer detailPost">
           <div className="block">
             <div className="block-item-img ">
-              <img className="img" src={posts[SelectPost-1].url} alt="" />
+              <img className="imgFit" src={`${END_POINT}${post.image}`} alt="" />
             </div>
             <div className="block-item-author">
               <div className="author">
@@ -73,17 +98,33 @@ export default function DetailPost({posts, closeModal, step}) {
                     <img src="/img/profile/avatar.jpg" alt="" />
                   </div>
                   <div className="postDescription">
-                    <h3>Username</h3>
+                    <h3>{currentUser.username}</h3>
                     <p>Original sound</p>
                   </div>
                 </div>
-                <button className='more-btn button'>
+                <button className='more-btn button' onClick={() => {setSettingModal(true);}}>
                   <div className='circle-more'></div>
                   <div className='circle-more'></div>
                   <div className='circle-more'></div>
                 </button>
               </div>
               <div className="comments">
+                <div className="comment">
+                      <div className="user">
+                        <div className="userAvatar modalAvatar">
+                          <img className="imgCircle" src="/img/profile/avatar.jpg" alt="" />
+                        </div>
+                        <div className="commentStatus">
+                          <div className="userAndCom">
+                            <h3>{currentUser.username}</h3>
+                            <p>{post.description}</p>
+                          </div>
+                          <div className="statsOfCom">
+                            <span className="sentDay">37w</span>                          
+                          </div>
+                        </div>
+                      </div>
+                  </div>
               {AllComments.length == 0 && <div className="noComments">
                   <h3>No comments yet.</h3>
                   <p>Start the conversation.</p>
@@ -96,13 +137,13 @@ export default function DetailPost({posts, closeModal, step}) {
                       </div>
                       <div className="commentStatus">
                         <div className="userAndCom">
-                          <h3>Username</h3>
+                          <h3>{currentUser.username}</h3>
                           <p>{item.InputValue}</p>
                         </div>
                         <div className="statsOfCom">
                           <span className="sentDay">37w</span>
                           <span className="reply">Reply</span>
-                          <button className='more-btn button removeCom' onClick={() => {SetDelComment(item); SetOpenRemoveModal(true)}}>
+                          <button className='more-btn button removeCom' onClick={() => {SetDelComment(item); setMoreCommentModal(true)}}>
                             <div className='circle-more'></div>
                             <div className='circle-more'></div>
                             <div className='circle-more'></div>

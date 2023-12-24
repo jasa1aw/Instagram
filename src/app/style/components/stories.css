@@ -16,7 +16,7 @@
     gap: 0 !important;
     justify-content: space-between !important;
 }
-.storyHeader h3, p{
+.storyHeader h3, .storyHeader p{
     color: #fff;
 }
 .storyModalItem{

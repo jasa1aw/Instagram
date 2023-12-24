@@ -7,11 +7,14 @@ import FollowersModal from '../SocialNet/followers';
 import FollowingModal from '../SocialNet/following';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMyPosts , CreatePost} from '@/app/store/slices/postSlice';
+import { getMyPosts , CreatePost, getPostById} from '@/app/store/slices/postSlice';
 export default function UserProfile ({user,followers,following}) {
+    const [openDetailModal, setOpenDetailModal] = useState(false)
+
     const dispatch = useDispatch()
     const currentUser = useSelector((state) => state.auth.currentUser)
     const posts = useSelector((state) => state.post.posts)
+    // console.log(posts);
     const didMount = () =>{
         dispatch(getMyPosts())
     }
@@ -28,26 +31,35 @@ export default function UserProfile ({user,followers,following}) {
     const [openModal, setOpenModal] = useState(false);
     const [OpenFollowersModal, SetOpenFollowersModal] = useState(false);
     const [OpenFollowingModal, SetOpenFollowingModal] = useState(false)
-    const [selectImg, setSelectImg] = useState();
     
-    const SelectedPost = (id) =>{
-        setSelectImg(id)
+    const SelectedPost = (data) =>{
+        // console.log('work');
+        if(data){
+            dispatch(getPostById(data.id))
+            console.log(data);
+            setOpenDetailModal(true)
+        }
     }
+    useEffect(SelectedPost,[])
+
     const closeModal = () =>{
         setOpenModal(false)
         SetOpenFollowersModal(false)
         SetOpenFollowingModal(false)
-        setSelectImg()
+        setOpenDetailModal(false)
     }
     const modalOpen = () =>{
         setOpenModal(true) 
     }
+    const post = useSelector((state) => state.post.post)
+    console.log(post);
+    
 
     return(
         <section className='profile'>
             <Navbar openModal={modalOpen}/>
             {openModal && <UploadModal closeModal={closeModal} onSelect={onSelect}/>}
-            {selectImg >= 1 && <DetailPost closeModal={closeModal} posts={posts} step={selectImg} />}
+            {openDetailModal && <DetailPost closeModal={closeModal} post={post}  />}
             {OpenFollowersModal && <FollowersModal closeModal={closeModal} followers={followers}/>}
             {OpenFollowingModal && <FollowingModal closeModal={closeModal} following={following}/>}
             <div className='userInfo'>
@@ -95,7 +107,7 @@ export default function UserProfile ({user,followers,following}) {
                     <img src="/img/icons/postIcon.svg" alt="" />
                     <h3>POSTS</h3>
                 </div>
-                <Posts posts={posts} SelectedPosts={SelectedPost}/>
+                <Posts posts={posts} SelectedPost={SelectedPost}/>
             </div>
         </section>
     )

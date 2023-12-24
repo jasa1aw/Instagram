@@ -187,6 +187,9 @@
     flex-direction: column;
     gap: 5px;
 }
+.postDescription > h3, .postDescription > p{
+    color: #000;
+}
 
 .detailPost .block-item-author .author{
     display: flex;
@@ -344,24 +347,36 @@
 
 
 /* REMOVE MODAL */
-.removeBtns{
+.removeBtns, .settingBtns{
     position: absolute;
     width: 400px;
     height: 150px;
     justify-content: center;
     align-items: center;
 }
-.removeBtn{
+.removeBtn, .settingBtn{
     width: 100%;
     height: 100%;
     text-align: center;
     font-size: 15px;
     font-weight: 500;
     color: #ED4956;
+    border-bottom: 1px solid #dcdcdc;
 }
 .removeBtn:last-child{
     font-weight: 300;
     color: #000;
 }
 
-
+/* setting Modal */
+.settingBtns{
+    height: 500px;
+}
+.settingBtn{
+    font-weight: 300 ;
+    color: #000;
+}
+.settingBtn:first-child{
+    font-weight: 700;
+    color: #ED4956;
+}
