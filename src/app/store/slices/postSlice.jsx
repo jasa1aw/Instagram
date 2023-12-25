@@ -6,7 +6,8 @@ export const postSlice = createSlice({
     name:"post",
     initialState:{
         posts:[],
-        post:{}
+        post:{},
+        allPosts:[],
     },
     reducers:{
         setMyPosts:(state,action) => {
@@ -21,12 +22,15 @@ export const postSlice = createSlice({
         handleDeletedPost:(state, action) => {
             let posts = [...state.posts]
             posts = posts.filter(item => item.id !== action.payload)
-        }
+        },
+        setAllPosts:(state,action) => {
+            state.allPosts = action.payload.allPosts
+        },
         
 
     }
 })
-export const {setMyPosts, appendMyPosts, setPostById, handleDeletedPost} = postSlice.actions
+export const {setMyPosts, appendMyPosts, setPostById, handleDeletedPost, setAllPosts} = postSlice.actions
 
 
 
@@ -39,15 +43,17 @@ export const getMyPosts = () => async(dispatch) =>{
         alert("Ошибка при запросе пожалуйста сообщите об ошибке")
     }
 }
-// export const getMyPosts = () => async(dispatch) =>{
-//     try {
-//         const res = await axios.get(`${END_POINT}/api/post/getAllUserPosts`)
-//         dispatch(setMyPosts({posts:res.data}))
-//         // console.log('res' + res);
-//     } catch (error) {
-//         alert("Ошибка при запросе пожалуйста сообщите об ошибке")
-//     }
-// }
+
+export const getAllPosts = () => async(dispatch) =>{
+    try {
+        const res = await axios.get(`${END_POINT}/api/post/getAllUsersPosts`)
+        dispatch(setAllPosts({posts:res.data}))
+        // console.log('res' + res);
+    } catch (error) {
+        alert("Ошибка при запросе пожалуйста сообщите об ошибке")
+    }
+}
+
 
 export const CreatePost = (data) => async(dispatch) => {
     axios.post(`${END_POINT}/api/post/newPost`, data).then((res) => {
