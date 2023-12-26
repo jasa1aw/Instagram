@@ -5,7 +5,7 @@ import { END_POINT } from "@/config/end_point";
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { deletePost } from "@/app/store/slices/postSlice";
-import { useRouter } from 'next/navigation';
+import EditPost from "./editPost/editpost";
 export default function DetailPost({post, closeModal}) {
   
   const dispatch = useDispatch()
@@ -15,6 +15,7 @@ export default function DetailPost({post, closeModal}) {
   const [DelComment,SetDelComment] = useState({});
   const [moreCommentModal,setMoreCommentModal] = useState(false);
   const [settingModal, setSettingModal] = useState(false);
+  const [EditPost, setEditPost] = useState(false);
 
   const addCommentsToPost = (item) =>{
       SetAllComments([...AllComments,item])
@@ -36,6 +37,7 @@ export default function DetailPost({post, closeModal}) {
 
   return (
     <div className="modalBackground">
+      {EditPost && <EditPost closeModal={closeModal}/>}
       {moreCommentModal == true && <div className="removeModal">
         <div className="removeBtns">
           <button className="removeBtn button">Report</button>
@@ -46,7 +48,7 @@ export default function DetailPost({post, closeModal}) {
       {settingModal == true && <div className="removeModal">
         <div className="removeBtns settingBtns">
           <button className="settingBtn button" type='button' onClick={() => {dispatch(deletePost(post.id)), closeModal(false)}}>Delete</button>
-          <button className="settingBtn button">Edit</button>
+          <button className="settingBtn button" onClick={() => {setEditPost(true);}}>Edit</button>
           <button className="settingBtn button">Hide like count</button>
           <button className="settingBtn button">Turn off commenting</button>
           <button className="settingBtn button">Go to post</button>

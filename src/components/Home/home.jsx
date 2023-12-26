@@ -5,8 +5,31 @@ import Navbar from '../userProfile/navMenu';
 import SuggestNavbar from './suggestNav';
 import Stories from "../Stories/stories";
 import DetailStory from "../detailStory";
-import { useState } from 'react';
+import UsersPosts from "../UsersPosts/usersPosts";
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllPosts, getPostById } from "@/app/store/slices/postSlice";
+
 export default function Home ({stories}) {
+    const dispatch = useDispatch()
+    const posts = useSelector((state) => state.post.allPosts)
+    console.log(posts);
+    const didMount = () =>{
+        dispatch(getAllPosts())
+    }
+    useEffect(didMount,[])
+
+    const SelectedPost = (data) =>{
+        // console.log('work');
+        if(data){
+            dispatch(getPostById(data.id))
+            console.log(data);
+            setOpenDetailModal(true)
+        }
+    }
+    useEffect(SelectedPost,[])
+    const post = useSelector((state) => state.post.post)
+
     const [openModal, setOpenModal] = useState(false);
     const modalOpen = () =>{
         setOpenModal(true)
@@ -26,8 +49,8 @@ export default function Home ({stories}) {
                 <Stories stories={stories} SelectedStories={SelectedStory}/>
                 
             <div className='mainHomeBlock'>
-
-                <div className="block-item-author">
+                <UsersPosts posts={posts} SelectedPost={SelectedPost}/>
+                {/* <div className="block-item-author">
                     <div className="MainPost author">
                         <div className="user">
                         <div className="userAvatar modalAvatar">
@@ -70,7 +93,7 @@ export default function Home ({stories}) {
                             <img className="img" src="/img/icons/smile.svg" alt="" />
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
             <SuggestNavbar/>
         </section>

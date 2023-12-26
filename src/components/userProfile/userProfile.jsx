@@ -9,8 +9,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMyPosts , CreatePost, getPostById} from '@/app/store/slices/postSlice';
 export default function UserProfile ({user,followers,following}) {
-    const [openDetailModal, 
-    ] = useState(false)
+    const [openDetailModal, setOpenDetailModal] = useState(false)
 
     const dispatch = useDispatch()
     const currentUser = useSelector((state) => state.auth.currentUser)

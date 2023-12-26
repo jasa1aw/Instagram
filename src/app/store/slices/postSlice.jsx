@@ -47,7 +47,7 @@ export const getMyPosts = () => async(dispatch) =>{
 export const getAllPosts = () => async(dispatch) =>{
     try {
         const res = await axios.get(`${END_POINT}/api/post/getAllUsersPosts`)
-        dispatch(setAllPosts({posts:res.data}))
+        dispatch(setAllPosts({allPosts:res.data}))
         // console.log('res' + res);
     } catch (error) {
         alert("Ошибка при запросе пожалуйста сообщите об ошибке")
@@ -77,7 +77,6 @@ export const getPostById = (id) => async(dispatch) =>{
 
 export const deletePost = (id) => async(dispatch) =>{
     try {
-        
         const res = await axios.delete(`${END_POINT}/api/post/deletePostByID/${id}`)
         dispatch(handleDeletedPost(id))
         dispatch(getMyPosts())
