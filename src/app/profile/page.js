@@ -1,8 +1,17 @@
 'use client'
 import UserProfile from '@/components/userProfile/userProfile'
 import Footer from '@/components/Footer/footer'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation';
 export default function Profile() {
-  
+  const isAuth = useSelector((state) => state.auth.isAuth)
+  const router = useRouter()
+  useEffect(() => {
+    if(!isAuth){
+      router.push('/login')
+    } 
+  }, [isAuth])
 
   let user =
     {

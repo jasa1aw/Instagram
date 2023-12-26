@@ -1,7 +1,7 @@
 .modalBackground, .removeModal{
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(0, 0, 0, .7);
     position: fixed;
     top: 0;
     left: 0;
@@ -64,22 +64,24 @@
     margin: auto 0;
     gap: 20px;
 }
-.modalContainer .body input{
-    position: relative;
-    opacity: 0;
-    z-index: 1;
-    cursor: pointer;
-    width: 100%;
-}
-.select-btn{
-    position: absolute;
-    top: 61%;
-    opacity: 1;
-    transition: .3s;
 
+.select-btn{
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    transition: .3s;
 }
 .select-btn:hover{
     background-color: rgb(24, 119, 242);
+}
+.modalContainer .body input{
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    z-index: 1;
+    cursor: pointer;
+    width: 100%;
 }
 
 /* second */
@@ -115,7 +117,7 @@
     border-radius: 0 0 0 12px;
 }    
 .block-item-author{
-    width: 35%;
+    width: 60%;
     padding: 20px 15px;
 }
 
@@ -182,12 +184,12 @@
     align-items: center;
     gap: 10px;
 }
-.postDescription{
+.postHeader{
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-.postDescription > h3, .postDescription > p{
+.postHeader > h3, .postHeader > p{
     color: #000;
 }
 
@@ -347,7 +349,7 @@
 
 
 /* REMOVE MODAL */
-.removeBtns, .settingBtns{
+.removeBtns, .settingBtns, .withoutUserSettingBtns{
     position: absolute;
     width: 400px;
     height: 150px;
@@ -371,6 +373,9 @@
 /* setting Modal */
 .settingBtns{
     height: 500px;
+}
+.withoutUserSettingBtns{
+    height: 400px;
 }
 .settingBtn{
     font-weight: 300 ;

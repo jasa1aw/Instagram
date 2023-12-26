@@ -57,57 +57,61 @@ export default function UserProfile ({user,followers,following}) {
 
     return(
         <section className='profile'>
-            <Navbar openModal={modalOpen}/>
+            <div className="nav">
+                <Navbar openModal={modalOpen}/>
+            </div>
             {openModal && <UploadModal closeModal={closeModal} onSelect={onSelect}/>}
             {openDetailModal && <DetailPost closeModal={closeModal} post={post}  />}
             {OpenFollowersModal && <FollowersModal closeModal={closeModal} followers={followers}/>}
             {OpenFollowingModal && <FollowingModal closeModal={closeModal} following={following}/>}
-            <div className='userInfo'>
-                <div className='userAvatar'>
-                    <img src={user.avatar} alt="avatar" />
-                </div>
-                <div className='userAbout'>
-                    <div className='username'>
-                        <h3>{currentUser.full_name}</h3>
-                        <button className='follow-btn button button-primary'>Follow</button>
-                        <button className='message-btn button'>Message</button>
-                        <button className='addUser-btn button'>
-                            <img src="/img/icons/addUser.svg" alt="" />
-                        </button>
-                        <button className='more-btn button' >
-                            <div className='circle-more'></div>
-                            <div className='circle-more'></div>
-                            <div className='circle-more'></div>
-                        </button>
+            <div className="mainProfile">
+                <div className='userInfo'>
+                    <div className='userAvatar'>
+                        <img src={user.avatar} alt="avatar" />
                     </div>
-                    <div className='contentAbout'>
-                        <p>{posts.length} post</p>
-                        <p onClick={() => SetOpenFollowersModal(true)}>{user.stats.followers} followers</p>
-                        <p onClick={() => SetOpenFollowingModal(true)}>{user.stats.following} following</p>
+                    <div className='userAbout'>
+                        <div className='username'>
+                            <h3>{currentUser.full_name}</h3>
+                            <button className='follow-btn button button-primary'>Follow</button>
+                            <button className='message-btn button'>Message</button>
+                            <button className='addUser-btn button'>
+                                <img src="/img/icons/addUser.svg" alt="" />
+                            </button>
+                            <button className='more-btn button' >
+                                <div className='circle-more'></div>
+                                <div className='circle-more'></div>
+                                <div className='circle-more'></div>
+                            </button>
+                        </div>
+                        <div className='contentAbout'>
+                            <p>{posts.length} post</p>
+                            <p onClick={() => SetOpenFollowersModal(true)}>{user.stats.followers} followers</p>
+                            <p onClick={() => SetOpenFollowingModal(true)}>{user.stats.following} following</p>
+                        </div>
+                        <div className='bio'>
+                            <h2>{currentUser.username}</h2>
+                        </div>
                     </div>
-                    <div className='bio'>
-                        <h2>{currentUser.username}</h2>
+                </div>
+                <div className='highlights'>
+                    <div className='highlight'>
+                        <img src="" alt="" />
+                        <p>Highlight</p>
+                    </div>
+                    <div className='highlight'>
+                        <img src="" alt="" />
+                        <p>Highlight</p>
                     </div>
                 </div>
-            </div>
-            <div className='highlights'>
-                <div className='highlight'>
-                    <img src="" alt="" />
-                    <p>Highlight</p>
+                <div className="posts">
+                    <hr className="line"/>
+                    <div className='posts-icon-line'></div>
+                    <div className="posts-icon">
+                        <img src="/img/icons/postIcon.svg" alt="" />
+                        <h3>POSTS</h3>
+                    </div>
+                    <Posts posts={posts} SelectedPost={SelectedPost}/>
                 </div>
-                <div className='highlight'>
-                    <img src="" alt="" />
-                    <p>Highlight</p>
-                </div>
-            </div>
-            <div className="posts container">
-                <hr className="line"/>
-                <div className='posts-icon-line'></div>
-                <div className="posts-icon">
-                    <img src="/img/icons/postIcon.svg" alt="" />
-                    <h3>POSTS</h3>
-                </div>
-                <Posts posts={posts} SelectedPost={SelectedPost}/>
             </div>
         </section>
     )

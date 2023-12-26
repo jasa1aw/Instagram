@@ -5,7 +5,7 @@ import {faVolumeXmark, faPlay} from "@fortawesome/free-solid-svg-icons";
 export default function DetailStory({stories, closeModal, step}){
     const SelectStory = step;
     return(
-        <div className="modalBackground storyBack">
+        <div className="modalBackground storyBack" onClick={() => {closeModal(false);}}>
         <button className="button modal-btn" onClick={() => {closeModal(false);}}>
             <svg
             fill="currentColor"

@@ -40,8 +40,8 @@ export default function Navbar({openModal}) {
         <li>
             <svg
                 fill="currentColor"
-                height="22"
-                width="22"
+                height="120"
+                width="1"
                 className="navIcon"
             >
                 <path

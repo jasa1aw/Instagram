@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deletePost } from "@/app/store/slices/postSlice";
 import EditPost from "./editPost/editpost";
 export default function DetailPost({post, closeModal}) {
-  
+  // console.log(post.User.username);
   const dispatch = useDispatch()
   const currentUser = useSelector((state) => state.auth.currentUser)
 
@@ -15,7 +15,7 @@ export default function DetailPost({post, closeModal}) {
   const [DelComment,SetDelComment] = useState({});
   const [moreCommentModal,setMoreCommentModal] = useState(false);
   const [settingModal, setSettingModal] = useState(false);
-  const [EditPost, setEditPost] = useState(false);
+  const [openEditPost, setOpenEditPost] = useState(false);
 
   const addCommentsToPost = (item) =>{
       SetAllComments([...AllComments,item])
@@ -37,7 +37,7 @@ export default function DetailPost({post, closeModal}) {
 
   return (
     <div className="modalBackground">
-      {EditPost && <EditPost closeModal={closeModal}/>}
+      {openEditPost && <EditPost closeModal={closeModal}/>}
       {moreCommentModal == true && <div className="removeModal">
         <div className="removeBtns">
           <button className="removeBtn button">Report</button>
@@ -45,12 +45,23 @@ export default function DetailPost({post, closeModal}) {
           <button className="removeBtn button" onClick={() => {setMoreCommentModal(false);}}>Cancel</button>
         </div>
       </div>}
-      {settingModal == true && <div className="removeModal">
+      {settingModal == true && post.User.username==currentUser.username && <div className="removeModal">
         <div className="removeBtns settingBtns">
           <button className="settingBtn button" type='button' onClick={() => {dispatch(deletePost(post.id)), closeModal(false)}}>Delete</button>
-          <button className="settingBtn button" onClick={() => {setEditPost(true);}}>Edit</button>
+          <button className="settingBtn button" onClick={() => {setOpenEditPost(true);}}>Edit</button>
           <button className="settingBtn button">Hide like count</button>
           <button className="settingBtn button">Turn off commenting</button>
+          <button className="settingBtn button">Go to post</button>
+          <button className="settingBtn button">Share to...</button>
+          <button className="settingBtn button">Copy link</button>
+          <button className="settingBtn button">Embed</button>
+          <button className="settingBtn button">About this account</button>
+          <button className="settingBtn button" onClick={() => {setSettingModal(false);}}>Cancel</button>
+        </div>
+      </div>}
+      {settingModal == true && post.User.username!==currentUser.username && <div className="removeModal">
+        <div className="removeBtns settingBtns withoutUserSettingBtns">
+          <button className="settingBtn button" type='button' onClick={() => {closeModal(false)}}>Report</button>
           <button className="settingBtn button">Go to post</button>
           <button className="settingBtn button">Share to...</button>
           <button className="settingBtn button">Copy link</button>
@@ -99,8 +110,8 @@ export default function DetailPost({post, closeModal}) {
                   <div className="userAvatar modalAvatar">
                     <img src="/img/profile/avatar.jpg" alt="" />
                   </div>
-                  <div className="postDescription">
-                    <h3>{currentUser.username}</h3>
+                  <div className="postHeader">
+                    <h3>{post.User.username}</h3>
                     <p>Original sound</p>
                   </div>
                 </div>
@@ -110,15 +121,15 @@ export default function DetailPost({post, closeModal}) {
                   <div className='circle-more'></div>
                 </button>
               </div>
-              <div className="comments">
-                <div className="comment">
+              <div className="comments postdDescription">
+              {post.description  && <div className="comment">
                       <div className="user">
                         <div className="userAvatar modalAvatar">
                           <img className="imgCircle" src="/img/profile/avatar.jpg" alt="" />
                         </div>
                         <div className="commentStatus">
                           <div className="userAndCom">
-                            <h3>{currentUser.username}</h3>
+                            <h3>{post.User.username}</h3>
                             <p>{post.description}</p>
                           </div>
                           <div className="statsOfCom">
@@ -126,8 +137,8 @@ export default function DetailPost({post, closeModal}) {
                           </div>
                         </div>
                       </div>
-                  </div>
-              {AllComments.length == 0 && <div className="noComments">
+                  </div>}
+              {AllComments.length == 0 && post.description == 0 && <div className="noComments">
                   <h3>No comments yet.</h3>
                   <p>Start the conversation.</p>
                 </div>}

@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+
 export default function UploadModal({ closeModal, onSelect }) {
+  const currentUser = useSelector((state) => state.auth.currentUser)
+
   const [step, setStep] = useState(1);
   const [selectedFile, setSelectedFile] = useState(null);
   const [image, setImage] = useState(null)
@@ -89,9 +93,9 @@ export default function UploadModal({ closeModal, onSelect }) {
                 </svg>
               </div>
               <h2>Drag photos and videos here</h2>
-              <input type="file" accept=".png, .jpg, .jpeg" onChange={handleFileChange} />
-              <button onClick={() => {setStep(2);}} className="button button-primary select-btn">
+              <button className="button button-primary select-btn">
                 Select from computer
+                <input type="file" accept=".png, .jpg, .jpeg" onChange={handleFileChange} />
               </button>
           </div>
         </div>
@@ -116,7 +120,7 @@ export default function UploadModal({ closeModal, onSelect }) {
                 <div className="userAvatar modalAvatar">
                   <img src="/img/profile/avatar.jpg" alt="" />
                 </div>
-                <h3>Username</h3>
+                <h3>{currentUser.username}</h3>
               </div>
               <textarea className="textarea" cols="40" rows="13" placeholder="Write a caption..."  onChange={handleCaptionChange}>{caption}</textarea>
               <div className="emoji">

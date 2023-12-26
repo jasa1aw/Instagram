@@ -1,5 +1,21 @@
-.mainHomeBlock{
+.home{
     display: flex;
+}
+.nav{
+    width: 15%;
+    height: 100vh;
+}
+.main{
+    width: 55%;
+    height: 100vh;
+}
+.aside{
+    width: 30%;
+    height: 100vh;
+}
+.homeBlockItem{
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -15,7 +31,7 @@
 }
 .stories{
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     margin-top: 15px;
 }
 .story{

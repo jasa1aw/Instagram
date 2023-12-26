@@ -1,14 +1,14 @@
 'use client';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
 import Navbar from '../userProfile/navMenu';
 import SuggestNavbar from './suggestNav';
 import Stories from "../Stories/stories";
 import DetailStory from "../detailStory";
 import UsersPosts from "../UsersPosts/usersPosts";
+import DetailPost from '../detailPost';
+import UploadModal from '../uploadImageModal/modal';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllPosts, getPostById } from "@/app/store/slices/postSlice";
+import { getAllPosts, getPostById, CreatePost } from "@/app/store/slices/postSlice";
 
 export default function Home ({stories}) {
     const dispatch = useDispatch()
@@ -18,7 +18,8 @@ export default function Home ({stories}) {
         dispatch(getAllPosts())
     }
     useEffect(didMount,[])
-
+        
+    const [openDetailModal, setOpenDetailModal] = useState(false)
     const SelectedPost = (data) =>{
         // console.log('work');
         if(data){
@@ -29,73 +30,51 @@ export default function Home ({stories}) {
     }
     useEffect(SelectedPost,[])
     const post = useSelector((state) => state.post.post)
+    console.log(post);
 
     const [openModal, setOpenModal] = useState(false);
+
+    const onSelect = (image,description) => {
+        const form = new FormData();
+        form.append('image', image);
+        form.append('description', description)
+        dispatch(CreatePost(form))
+        console.log(`form: ${form}`);
+    }
+
     const modalOpen = () =>{
         setOpenModal(true)
     }
     const closeModal = () =>{
-        setSelectStory()
+        setSelectStory();
+        setOpenDetailModal(false);
+        setOpenModal(false)
     }
     const [selectStory, setSelectStory] = useState();
     const SelectedStory = (id) =>{
         setSelectStory(id)
     }
 
+
+
     return(
-        <section className='home'>\
-            <Navbar openModal={modalOpen}/>
+        <section className='home'>
+            {openDetailModal && <DetailPost closeModal={closeModal} post={post}/>}
+            {openModal && <UploadModal closeModal={closeModal} onSelect={onSelect}/>}
+            <div className="nav">
+                <Navbar openModal={modalOpen}/>
+            </div>
+            <div className='main'>
             {selectStory >= 1 && <DetailStory closeModal={closeModal} stories={stories} step={selectStory} />}
                 <Stories stories={stories} SelectedStories={SelectedStory}/>
-                
-            <div className='mainHomeBlock'>
-                <UsersPosts posts={posts} SelectedPost={SelectedPost}/>
-                {/* <div className="block-item-author">
-                    <div className="MainPost author">
-                        <div className="user">
-                        <div className="userAvatar modalAvatar">
-                            <img src="/img/profile/avatar.jpg" alt="" />
-                        </div>
-                        <div className="postDescription">
-                            <h3>Username</h3>
-                            <p>Original sound</p>
-                        </div>
-                        </div>
-                        <button className='more-btn button'>
-                        <div className='circle-more'></div>
-                        <div className='circle-more'></div>
-                        <div className='circle-more'></div>
-                        </button>
-                    </div>
-                    <div className="block-item-img HomeItemImg">
-                        <img className="img" src='/img/profile/posts/post1.svg' alt="" />
-                    </div>
-                    <div className="socialInteraction">
-                        <div className="socialFunc">
-                            <div className="socialFuncLeft">
-                            <FontAwesomeIcon icon={faHeart} className="socialFuncIcon"/>
-                            <FontAwesomeIcon icon={faComment} className="socialFuncIcon"/>
-                            <FontAwesomeIcon icon={faPaperPlane} className="socialFuncIcon"/>
-                            </div>
-                            <FontAwesomeIcon icon={faBookmark} className="socialFuncIcon"/>
-                        </div>
-                        <div className="likedBy">
-                            <div className="likedByAvatar">
-                            <img className="imgCircle" src="/img/profile/avatar.jpg" alt="" />
-                            </div>
-                            <span className="usersLiked">Liked by <b>deennqq</b> and <b>17 others</b></span>
-                        </div>
-                        <span className="postDay">December 5</span> 
-                    </div>
-                    <div className="addComment">
-                        <input className="input addCommentInput" type="text" placeholder="Add comment..." />
-                        <div className="emoji-img">
-                            <img className="img" src="/img/icons/smile.svg" alt="" />
-                        </div>
-                    </div>
-                </div> */}
+                <div className='mainHomeBlock'>
+                    <UsersPosts posts={posts} SelectedPost={SelectedPost}/>
+                </div>
+            </div>    
+            <div className='aside'>
+                <SuggestNavbar/>
             </div>
-            <SuggestNavbar/>
+            
         </section>
     )
 }
