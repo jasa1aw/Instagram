@@ -95,7 +95,7 @@ export default function UploadModal({ closeModal, onSelect }) {
               <h2>Drag photos and videos here</h2>
               <button className="button button-primary select-btn">
                 Select from computer
-                <input type="file" accept=".png, .jpg, .jpeg" onChange={handleFileChange} />
+                <input type="file" accept=".png, .jpg, .jpeg, .webp" onChange={handleFileChange} />
               </button>
           </div>
         </div>

@@ -50,7 +50,7 @@ export const getAllPosts = () => async(dispatch) =>{
         dispatch(setAllPosts({allPosts:res.data}))
         // console.log('res' + res);
     } catch (error) {
-        alert("Ошибка при запросе пожалуйста сообщите об ошибке")
+        console.error('Error submitting form:', error);
     }
 }
 
@@ -71,7 +71,17 @@ export const getPostById = (id) => async(dispatch) =>{
         dispatch(setPostById({post:res.data}))
         // console.log('res' + res);
     } catch (error) {
-        alert("Ошибка при запросе пожалуйста сообщите об ошибке", error)
+        console.error('Error submitting form:', error);
+    }
+}
+
+export const editPost = (data) => async(dispatch) =>{
+    try {
+        const res = await axios.put(`${END_POINT}/api/post/editPost`, data)
+        dispatch(getMyPosts())
+        // console.log('res' + res);
+    } catch (error) {
+        console.error('Error submitting form:', error);
     }
 }
 
@@ -82,7 +92,7 @@ export const deletePost = (id) => async(dispatch) =>{
         dispatch(getMyPosts())
         // console.log('res' + res);
     } catch (error) {
-        alert("Ошибка при запросе пожалуйста сообщите об ошибке", error)
+        console.error('Error submitting form:', error);
     }
 }
 

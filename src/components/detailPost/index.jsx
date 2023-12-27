@@ -34,10 +34,16 @@ export default function DetailPost({post, closeModal}) {
     addCommentsToPost(comments)
     SetInputValue('')
   }
+  const CloseEdit = () => {
+    setOpenEditPost(false)
+  }
+
+
+
 
   return (
     <div className="modalBackground">
-      {openEditPost && <EditPost closeModal={closeModal}/>}
+      {openEditPost && <EditPost closeModal={closeModal} post={post} CloseEdit={CloseEdit}/>}
       {moreCommentModal == true && <div className="removeModal">
         <div className="removeBtns">
           <button className="removeBtn button">Report</button>
@@ -48,7 +54,7 @@ export default function DetailPost({post, closeModal}) {
       {settingModal == true && post.User.username==currentUser.username && <div className="removeModal">
         <div className="removeBtns settingBtns">
           <button className="settingBtn button" type='button' onClick={() => {dispatch(deletePost(post.id)), closeModal(false)}}>Delete</button>
-          <button className="settingBtn button" onClick={() => {setOpenEditPost(true);}}>Edit</button>
+          <button className="settingBtn button" onClick={() => {setOpenEditPost(true); setSettingModal(false)}}>Edit</button>
           <button className="settingBtn button">Hide like count</button>
           <button className="settingBtn button">Turn off commenting</button>
           <button className="settingBtn button">Go to post</button>
@@ -111,7 +117,7 @@ export default function DetailPost({post, closeModal}) {
                     <img src="/img/profile/avatar.jpg" alt="" />
                   </div>
                   <div className="postHeader">
-                    <h3>{post.User.username}</h3>
+                    {/* <h3>{post.User.username}</h3> */}
                     <p>Original sound</p>
                   </div>
                 </div>
@@ -129,7 +135,7 @@ export default function DetailPost({post, closeModal}) {
                         </div>
                         <div className="commentStatus">
                           <div className="userAndCom">
-                            <h3>{post.User.username}</h3>
+                            {/* <h3>{post.User.username}</h3> */}
                             <p>{post.description}</p>
                           </div>
                           <div className="statsOfCom">

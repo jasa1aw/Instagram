@@ -110,6 +110,7 @@
     height: 100%;
 }
 .block-item-img{
+    position: relative;
     width: 65%;
 }
 .block-item-img img{
@@ -384,4 +385,17 @@
 .settingBtn:first-child{
     font-weight: 700;
     color: #ED4956;
+}
+
+/* edit Post */
+.trashBtn{
+    position: absolute;
+    width: 30px;
+    border-radius: 50%;
+    padding: 0;
+    top: 5px;
+}
+
+.editUploadImg{
+    width: 65%;
 }
