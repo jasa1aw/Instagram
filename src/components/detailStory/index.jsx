@@ -1,6 +1,6 @@
 'use client'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
+import {faHeart, faPaperPlane} from "@fortawesome/free-regular-svg-icons";
 import {faVolumeXmark, faPlay} from "@fortawesome/free-solid-svg-icons";
 export default function DetailStory({stories, closeModal, step}){
     const SelectStory = step;
