@@ -22,13 +22,7 @@ export default function UploadModal({ closeModal, post, CloseEdit }) {
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setImage(url)
-      // setStep(2);
     }
-  };
-  const handleBackButtonClick = () => {
-    setStep(1);
-    setSelectedFile(null);
-    setCaption("");
   };
   const handleCaptionChange = (event) => {
     setCaption(event.target.value);
