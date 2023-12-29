@@ -52,7 +52,7 @@ export default function UserProfile ({user,followers,following}) {
         setOpenModal(true) 
     }
     const post = useSelector((state) => state.post.post)
-    console.log(post);
+    // console.log(post);
     
 
     return(
@@ -110,7 +110,7 @@ export default function UserProfile ({user,followers,following}) {
                         <img src="/img/icons/postIcon.svg" alt="" />
                         <h3>POSTS</h3>
                     </div>
-                    <Posts posts={posts} SelectedPost={SelectedPost}/>
+                    {post && <Posts posts={posts} SelectedPost={SelectedPost}/>}
                 </div>
             </div>
         </section>

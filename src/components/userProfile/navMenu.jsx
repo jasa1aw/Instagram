@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faMagnifyingGlass, faClapperboard, faBars,} from "@fortawesome/free-solid-svg-icons";
-import {faCompass,faHeart,faSquarePlus,} from "@fortawesome/free-regular-svg-icons";
+import { faHouse, faMagnifyingGlass, faClapperboard, faBars} from "@fortawesome/free-solid-svg-icons";
+import {faCompass, faHeart, faSquarePlus} from "@fortawesome/free-regular-svg-icons";
 import { faThreads } from "@fortawesome/free-brands-svg-icons";
 import MoreModal from "../navMenuModal/navModal";
 

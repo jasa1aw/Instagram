@@ -1,5 +1,6 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {faTrashCan} from "@fortawesome/free-regular-svg-icons";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -48,32 +49,7 @@ export default function UploadModal({ closeModal, post, CloseEdit }) {
   return (
     <div className="modalBackground">
       <button className="button modal-btn" onClick={() => {closeModal()}}>
-        <svg
-          aria-label="Close"
-          fill="currentColor"
-          height="25"
-          width="26"
-        >
-          <polyline
-            fill="none"
-            points="20.643 3.357 12 12 3.353 20.647"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-          ></polyline>
-          <line
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-            x1="20.649"
-            x2="3.354"
-            y1="20.649"
-            y2="3.354"
-          ></line>
-        </svg>
+        <FontAwesomeIcon icon={faXmark} style={{color: "#000000", fontSize: "25px"}} />
       </button>
       {openRemoveModal && <div className="removeModal">
         <div className="removeBtns">

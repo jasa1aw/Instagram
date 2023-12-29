@@ -9,11 +9,12 @@ import UploadModal from '../uploadImageModal/modal';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllPosts, getPostById, CreatePost } from "@/app/store/slices/postSlice";
+import { getMyStories } from '@/app/store/slices/storySlice';
 
-export default function Home ({stories}) {
+export default function Home () {
     const dispatch = useDispatch()
     const posts = useSelector((state) => state.post.allPosts)
-    console.log(posts);
+    // console.log(posts);
     const didMount = () =>{
         dispatch(getAllPosts())
     }
@@ -30,7 +31,7 @@ export default function Home ({stories}) {
     }
     useEffect(SelectedPost,[])
     const post = useSelector((state) => state.post.post)
-    console.log(post);
+    // console.log(post);
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -46,16 +47,23 @@ export default function Home ({stories}) {
         setOpenModal(true)
     }
     const closeModal = () =>{
-        setSelectStory();
+        setStoryId();
         setOpenDetailModal(false);
         setOpenModal(false)
     }
-    const [selectStory, setSelectStory] = useState();
-    const SelectedStory = (id) =>{
-        setSelectStory(id)
+
+    const stories = useSelector((state) => state.story.stories)
+    const didMountStory = () =>{
+        dispatch(getMyStories())
     }
+    useEffect(didMountStory,[])
 
-
+    const [storyId, setStoryId] = useState();    
+    const [storyUrl, setStoryUrl] = useState();
+    const SelectedStory = (story) =>{
+        setStoryId(story.id)
+        setStoryUrl(story.video)
+    }
 
     return(
         <section className='home'>
@@ -65,7 +73,7 @@ export default function Home ({stories}) {
                 <Navbar openModal={modalOpen}/>
             </div>
             <div className='main'>
-            {selectStory >= 1 && <DetailStory closeModal={closeModal} stories={stories} step={selectStory} />}
+            {storyId >= 1 && <DetailStory closeModal={closeModal}  storyId={storyId} storyUrl={storyUrl} />}
                 <Stories stories={stories} SelectedStories={SelectedStory}/>
                 <div className='mainHomeBlock'>
                     <UsersPosts posts={posts} SelectedPost={SelectedPost}/>

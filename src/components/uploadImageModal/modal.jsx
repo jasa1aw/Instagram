@@ -1,8 +1,11 @@
 "use client";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { CreateStory } from "@/app/store/slices/storySlice";
 export default function UploadModal({ closeModal, onSelect }) {
+  const dispatch = useDispatch()
   const currentUser = useSelector((state) => state.auth.currentUser)
 
   const [step, setStep] = useState(1);
@@ -14,10 +17,26 @@ export default function UploadModal({ closeModal, onSelect }) {
     if (file) {
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
-      setImage(url)
+      setImage(url);
       setStep(2);
     }
   };
+
+  const handleStoryFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      const url = URL.createObjectURL(file);
+      setImage(url);
+      setStep(2);
+    }
+    if(file.type.startsWith('video/')){
+      setStep(4);
+    }else{
+      setStep(3);
+    }
+  };
+
   const handleBackButtonClick = () => {
     setStep(1);
     setSelectedFile(null);
@@ -31,40 +50,18 @@ export default function UploadModal({ closeModal, onSelect }) {
     return caption.length;
   };
   const Save = () => {
-    onSelect(selectedFile,caption)
-    // console.log('image', image);
+    onSelect(selectedFile,caption);
+    closeModal();
+  }
+  const saveStory = () => {
+    dispatch(CreateStory(selectedFile));
     closeModal()
   }
 
   return (
     <div className="modalBackground">
       <button className="button modal-btn" onClick={() => {closeModal()}}>
-        <svg
-          aria-label="Close"
-          fill="currentColor"
-          height="25"
-          width="26"
-        >
-          <polyline
-            fill="none"
-            points="20.643 3.357 12 12 3.353 20.647"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-          ></polyline>
-          <line
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-            x1="20.649"
-            x2="3.354"
-            y1="20.649"
-            y2="3.354"
-          ></line>
-        </svg>
+        <FontAwesomeIcon icon={faXmark} style={{color: "#000000", fontSize: "25px"}} />
       </button>
       {step == 1 && (
         <div className="modalContainer">
@@ -95,7 +92,11 @@ export default function UploadModal({ closeModal, onSelect }) {
               <h2>Drag photos and videos here</h2>
               <button className="button button-primary select-btn">
                 Select from computer
-                <input type="file" accept=".png, .jpg, .jpeg, .webp" onChange={handleFileChange} />
+                <input type="file" accept="" onChange={handleFileChange} />
+              </button>
+              <button className="button button-primary select-btn">
+                Upload story 
+                <input type="file" accept="" onChange={handleStoryFileChange} />
               </button>
           </div>
         </div>
@@ -130,6 +131,38 @@ export default function UploadModal({ closeModal, onSelect }) {
                 <p>{getCaptionLength()}/2,200</p>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+      {step == 3 && (
+        <div className="modalContainer">
+          <div className="title title2">
+            <button onClick={handleBackButtonClick} className="button back-btn">
+              <img className="img" src="/img/icons/arrowLeft.svg" alt="" />
+            </button>
+            <h2>Create new story</h2>
+            <button onClick={() => saveStory()} type="button" className="button share-btn">
+              Share
+            </button>
+          </div>
+          <div className="body">
+            <img className="img" src={image} alt="not found" />
+          </div>
+        </div>
+      )}
+      {step == 4 && (
+        <div className="modalContainer">
+          <div className="title title2">
+            <button onClick={handleBackButtonClick} className="button back-btn">
+              <img className="imgFit" src="/img/icons/arrowLeft.svg" alt="" />
+            </button>
+            <h2>Create new story</h2>
+            <button onClick={() => saveStory()} type="button" className="button share-btn">
+              Share
+            </button>
+          </div>
+          <div className="body">
+            <video className="video imgFit" src={image} alt="not found" autoPlay></video>
           </div>
         </div>
       )}

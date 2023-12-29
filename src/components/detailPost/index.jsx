@@ -1,5 +1,6 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
 import { END_POINT } from "@/config/end_point";
 import { useState } from "react";
@@ -78,32 +79,7 @@ export default function DetailPost({post, closeModal}) {
       </div>}
 
       <button className="button modal-btn" onClick={() => {closeModal(false);}}>
-        <svg
-          fill="currentColor"
-          height="25"
-          width="26"
-        >
-          <title>Close</title>
-          <polyline
-            fill="none"
-            points="20.643 3.357 12 12 3.353 20.647"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-          ></polyline>
-          <line
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="3"
-            x1="20.649"
-            x2="3.354"
-            y1="20.649"
-            y2="3.354"
-          ></line>
-        </svg>
+        <FontAwesomeIcon icon={faXmark} style={{color: "#000000", fontSize: "25px"}} />
       </button>
         <div className="modalContainer detailPost">
           <div className="block">
@@ -117,7 +93,7 @@ export default function DetailPost({post, closeModal}) {
                     <img src="/img/profile/avatar.jpg" alt="" />
                   </div>
                   <div className="postHeader">
-                    {/* <h3>{post.User.username}</h3> */}
+                    {post && post.User && <h3>{post.User.username}</h3>}
                     <p>Original sound</p>
                   </div>
                 </div>
@@ -135,7 +111,7 @@ export default function DetailPost({post, closeModal}) {
                         </div>
                         <div className="commentStatus">
                           <div className="userAndCom">
-                            {/* <h3>{post.User.username}</h3> */}
+                            {post && post.User && <h3>{post.User.username}</h3>}
                             <p>{post.description}</p>
                           </div>
                           <div className="statsOfCom">
