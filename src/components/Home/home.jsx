@@ -14,7 +14,6 @@ import { getMyStories } from '@/app/store/slices/storySlice';
 export default function Home () {
     const dispatch = useDispatch()
     const posts = useSelector((state) => state.post.allPosts)
-    // console.log(posts);
     const didMount = () =>{
         dispatch(getAllPosts())
     }
@@ -25,13 +24,11 @@ export default function Home () {
         // console.log('work');
         if(data){
             dispatch(getPostById(data.id))
-            console.log(data);
-            setOpenDetailModal(true)
+            if(data.id) setOpenDetailModal(true)            
         }
     }
     useEffect(SelectedPost,[])
     const post = useSelector((state) => state.post.post)
-    // console.log(post);
 
     const [openModal, setOpenModal] = useState(false);
 
@@ -76,7 +73,7 @@ export default function Home () {
             {storyId >= 1 && <DetailStory closeModal={closeModal}  storyId={storyId} storyUrl={storyUrl} />}
                 <Stories stories={stories} SelectedStories={SelectedStory}/>
                 <div className='mainHomeBlock'>
-                    <UsersPosts posts={posts} SelectedPost={SelectedPost}/>
+                    {posts && <UsersPosts posts={posts} SelectedPost={SelectedPost}/>}
                 </div>
             </div>    
             <div className='aside'>

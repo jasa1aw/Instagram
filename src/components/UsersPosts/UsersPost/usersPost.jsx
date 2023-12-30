@@ -2,8 +2,7 @@
 import { END_POINT } from "@/config/end_point"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
-export default function UsersPost({post, SelectedPost}){
-    
+export default function UsersPost({post, SelectedPost}){    
     return(
         <div className="block-item-author">
             <div className="MainPost author">

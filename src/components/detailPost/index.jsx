@@ -3,56 +3,68 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
 import { END_POINT } from "@/config/end_point";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { deletePost } from "@/app/store/slices/postSlice";
+import { getMyComments, CreateComment, deleteComment} from "@/app/store/slices/commentSlice";
+import { formatDistanceToNow } from 'date-fns';
+
 import EditPost from "./editPost/editpost";
 export default function DetailPost({post, closeModal}) {
-  // console.log(post.User.username);
   const dispatch = useDispatch()
   const currentUser = useSelector((state) => state.auth.currentUser)
+  const comments = useSelector((state) => state.comment.comments)
+  
+  useEffect(() => {
+    const didMount = async () => {
+      // Включите вашу логику здесь
+      await dispatch(getMyComments(post.id));
+    };
 
-  const [AllComments,SetAllComments] = useState([]);
+    didMount(); // Вызываете вашу функцию
+
+    // Если вам нужно что-то выполнить при unmount компонента,
+    // например, отменить запрос, вы можете вернуть функцию очистки
+    return () => {
+      // Ваш код очистки, если это необходимо
+    };
+  }, [dispatch, post.id]);
+  
+
   const [DelComment,SetDelComment] = useState({});
   const [moreCommentModal,setMoreCommentModal] = useState(false);
   const [settingModal, setSettingModal] = useState(false);
   const [openEditPost, setOpenEditPost] = useState(false);
 
-  const addCommentsToPost = (item) =>{
-      SetAllComments([...AllComments,item])
-  }
-  const Removecomment = (comment) =>{
-      let Remove= [...AllComments]
-      let index = AllComments.indexOf(comment)
-      Remove.splice(index,1)
-      SetAllComments(Remove)
-  }
+  
   const [InputValue,SetInputValue] = useState('')
   const save = () =>{
-    const comments = {
-      InputValue
-    }
-    addCommentsToPost(comments)
+    dispatch(CreateComment({
+      description: InputValue,
+      postId: post.id
+    }))
     SetInputValue('')
   }
   const CloseEdit = () => {
     setOpenEditPost(false)
   }
-
-
-
+  
 
   return (
     <div className="modalBackground">
       {openEditPost && <EditPost closeModal={closeModal} post={post} CloseEdit={CloseEdit}/>}
-      {moreCommentModal == true && <div className="removeModal">
+      {moreCommentModal && <div className="removeModal">
         <div className="removeBtns">
           <button className="removeBtn button">Report</button>
-          <button className="removeBtn button" onClick={() => {Removecomment(DelComment); setMoreCommentModal(false)}}>Delete</button>
+          <button className="removeBtn button" onClick={() => {
+            dispatch(deleteComment(DelComment, post.id)) 
+            setMoreCommentModal(false)}}>
+              Delete
+          </button>
           <button className="removeBtn button" onClick={() => {setMoreCommentModal(false);}}>Cancel</button>
         </div>
       </div>}
-      {settingModal == true && post.User.username==currentUser.username && <div className="removeModal">
+      {settingModal && post.User.username == currentUser.username && <div className="removeModal">
         <div className="removeBtns settingBtns">
           <button className="settingBtn button" type='button' onClick={() => {dispatch(deletePost(post.id)), closeModal(false)}}>Delete</button>
           <button className="settingBtn button" onClick={() => {setOpenEditPost(true); setSettingModal(false)}}>Edit</button>
@@ -114,17 +126,14 @@ export default function DetailPost({post, closeModal}) {
                             {post && post.User && <h3>{post.User.username}</h3>}
                             <p>{post.description}</p>
                           </div>
-                          <div className="statsOfCom">
-                            <span className="sentDay">37w</span>                          
-                          </div>
                         </div>
                       </div>
                   </div>}
-              {AllComments.length == 0 && post.description == 0 && <div className="noComments">
+              {comments.length == 0 && post.description == 0 && <div className="noComments">
                   <h3>No comments yet.</h3>
                   <p>Start the conversation.</p>
                 </div>}
-                {AllComments.length > 0 && AllComments.map((item, index) =>(
+                {comments.length > 0 && comments.map((item, index) =>(                  
                   <div className="comment" key={index}>
                     <div className="user">
                       <div className="userAvatar modalAvatar">
@@ -132,13 +141,13 @@ export default function DetailPost({post, closeModal}) {
                       </div>
                       <div className="commentStatus">
                         <div className="userAndCom">
-                          <h3>{currentUser.username}</h3>
-                          <p>{item.InputValue}</p>
+                        {item && item.User && <h3>{item.User.username}</h3>}
+                        <p>{item.description}</p>
                         </div>
                         <div className="statsOfCom">
-                          <span className="sentDay">37w</span>
+                        <span className="sentDay">{formatDistanceToNow(new Date(item.updatedAt), { addSuffix: true })}</span>  
                           <span className="reply">Reply</span>
-                          <button className='more-btn button removeCom' onClick={() => {SetDelComment(item); setMoreCommentModal(true)}}>
+                          <button className='more-btn button removeCom' onClick={() => {SetDelComment(item.id); setMoreCommentModal(true)}}>
                             <div className='circle-more'></div>
                             <div className='circle-more'></div>
                             <div className='circle-more'></div>
@@ -152,10 +161,10 @@ export default function DetailPost({post, closeModal}) {
                 </div>
                 ))}
               </div>
-              <div className="boostBlog">
+              {post && post.User && post.User.username == currentUser.username && <div className="boostBlog">
                   <h3>View insights</h3>
                   <button className="button button-primary">Boost post</button>
-              </div>
+              </div>}
               <div className="socialInteraction">
                   <div className="socialFunc">
                     <div className="socialFuncLeft">
@@ -178,8 +187,8 @@ export default function DetailPost({post, closeModal}) {
                   <img className="img" src="/img/icons/smile.svg" alt="" />
                 </div>
                 <input className="input addCommentInput" type="text" placeholder="Add comment..." onChange={(e) => SetInputValue(e.target.value)} value={InputValue}/>
-                {InputValue.length >0 && <button className="button postCommentBtn" onClick={save}>Post</button>} 
-                {InputValue.length ==0 && <button className="button postCommentBtnWithoutColor">Post</button>}
+                {InputValue.length > 0 && <button className="button postCommentBtn" onClick={save}>Post</button>} 
+                {InputValue.length == 0 && <button className="button postCommentBtnWithoutColor">Post</button>}
                 {/* {inputvalue.length >1 && <button className="Add-comment-to-post" onClick={save}>Post</button>}
                 {inputvalue.length ==0 && <button className="Add-comment-to-post withoutcolor">Post</button>} */}
                 

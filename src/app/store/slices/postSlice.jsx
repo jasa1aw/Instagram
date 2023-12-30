@@ -40,7 +40,7 @@ export const getMyPosts = () => async(dispatch) =>{
         dispatch(setMyPosts({posts:res.data}))
         // console.log('res' + res);
     } catch (error) {
-        alert("Ошибка при запросе пожалуйста сообщите об ошибке")
+        alert("Ошибка при запросе post")
     }
 }
 
