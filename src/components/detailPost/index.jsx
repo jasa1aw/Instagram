@@ -33,7 +33,6 @@ export default function DetailPost({post, closeModal}) {
   const [settingModal, setSettingModal] = useState(false);
   const [openEditPost, setOpenEditPost] = useState(false);
   let [liked, setLiked] = useState([]);
-  const [likedCom, setLikedCom] = useState(false);
 
   useEffect(() => {
     liked = likes.filter(item => item.userId === currentUser.id )
@@ -41,10 +40,6 @@ export default function DetailPost({post, closeModal}) {
       setLiked(liked)
     }
   },[likes])
-
-  const toggleLikedCom = () => {
-    setLikedCom(!likedCom);
-  };
 
   const removeLike = (data) =>{
     if(data[0].userId == currentUser.id){

@@ -30,7 +30,7 @@ export const likeSlice = createSlice({
 export const {setPostLikes, appendPostLikes, appendCommentLikes, appendStoryLikes, handleDeletedLike} = likeSlice.actions
 
 
-
+// Post Like
 export const getLikesOfPost = (id) => async(dispatch) =>{
     console.log(id);
     try {
@@ -40,9 +40,6 @@ export const getLikesOfPost = (id) => async(dispatch) =>{
         alert("Ошибка при запросе like")
     }
 }
-
-
-
 export const addLikeToPost = (id) => async(dispatch) => {
     console.log(id);
     axios.post(`${END_POINT}/api/like/add-like-to-post/${id}`).then((res) => {
@@ -51,7 +48,19 @@ export const addLikeToPost = (id) => async(dispatch) => {
         console.log(`addLike ${error}`);
     })
 }
+export const deletedLike = (likeId, postId) => async(dispatch) =>{
+    // console.log(likeId);
+    // console.log(postId);
+    try {
+        const res = await axios.delete(`${END_POINT}/api/like/remove-like/${likeId}`)
+        dispatch(handleDeletedLike(likeId))
+        dispatch(getLikesOfPost(postId))
+    } catch (error) {
+        console.log(`deleteLike ${error}`);
+    }
+}
 
+// Comment Like
 export const getLikesOfComments = (id) => async(dispatch) =>{
     console.log(id);
     try {
@@ -61,9 +70,6 @@ export const getLikesOfComments = (id) => async(dispatch) =>{
         alert("Ошибка при запросе like")
     }
 }
-
-
-
 export const addLikeToComment = (commentId) => async(dispatch) => {
     // console.log(id);
     axios.post(`${END_POINT}/api/like/add-like-to-comment/${commentId}`).then((res) => {
@@ -73,8 +79,6 @@ export const addLikeToComment = (commentId) => async(dispatch) => {
     })
 }
 export const removeLikeComment = (likeId, commmentId) => async(dispatch) =>{
-    // console.log(likeId);
-    // console.log(postId);
     try {
         const res = await axios.delete(`${END_POINT}/api/like/remove-like/${likeId}`)
         dispatch(handleDeletedLike(likeId))
@@ -84,16 +88,34 @@ export const removeLikeComment = (likeId, commmentId) => async(dispatch) =>{
     }
 }
 
-export const deletedLike = (likeId, postId) => async(dispatch) =>{
-    console.log(likeId);
-    console.log(postId);
+
+export const getLikesOfStories = (id) => async(dispatch) =>{
+    console.log(id);
+    try {
+        const res = await axios.get(`${END_POINT}/api/like/get-likes-by-story/${id}`)
+        dispatch(setPostLikes({likes:res.data}))
+    } catch (error) {
+        alert("Ошибка при запросе like")
+    }
+}
+export const addLikeToStory = (storyId) => async(dispatch) => {
+    // console.log(id);
+    axios.post(`${END_POINT}/api/like/add-like-to-story/${storyId}`).then((res) => {
+        dispatch(getLikesOfStories(storyId))
+    }).catch((error) =>{
+        console.log(`addLike ${error}`);
+    })
+}
+export const removeLikeStory = (likeId, storyId) => async(dispatch) =>{
     try {
         const res = await axios.delete(`${END_POINT}/api/like/remove-like/${likeId}`)
         dispatch(handleDeletedLike(likeId))
-        dispatch(getLikesOfPost(postId))
+        dispatch(getLikesOfStories(storyId))
     } catch (error) {
         console.log(`deleteLike ${error}`);
     }
 }
+
+
 
 export default likeSlice.reducer

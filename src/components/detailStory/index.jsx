@@ -1,11 +1,12 @@
 'use client'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faHeart, faPaperPlane, faCircleStop} from "@fortawesome/free-regular-svg-icons";
-import {faVolumeHigh, faPlay, faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faPaperPlane, faCircleStop, faHeart as farHeart} from "@fortawesome/free-regular-svg-icons";
+import {faVolumeHigh, faPlay, faXmark, faHeart} from "@fortawesome/free-solid-svg-icons";
 import { END_POINT } from "@/config/end_point"
 import { useSelector, useDispatch } from 'react-redux';
 import { useRef, useState, useEffect} from "react";
 import { deleteStory } from "@/app/store/slices/storySlice";
+import { getLikesOfStories, addLikeToStory, removeLikeStory } from "@/app/store/slices/likeSlice";
 
 
 export default function DetailStory({closeModal, storyId, storyUrl}){
@@ -35,6 +36,31 @@ export default function DetailStory({closeModal, storyId, storyUrl}){
             ref.current.pause();
         }
         setPlay(!play);
+    }
+
+    const likes = useSelector((state) => state.like.likes);
+  // console.log(likes);
+    useEffect(() => {
+        const didMount = async () => {
+        dispatch(getLikesOfStories(storyId));
+        };
+        didMount();
+    }, [dispatch, storyId]);
+
+    let [liked, setLiked] = useState([]);
+
+    useEffect(() => {
+        liked = likes.filter(item => item.userId === currentUser.id )
+        if(liked.length){
+        setLiked(liked)
+        }
+    },[likes])
+
+    const removeLike = (data) =>{
+        if(data[0].userId == currentUser.id){
+        dispatch(removeLikeStory(data[0].id, storyId))
+        setLiked([])
+        }
     }
 
     return(
@@ -80,7 +106,12 @@ export default function DetailStory({closeModal, storyId, storyUrl}){
                     
                     <div className="addComment replyStory">
                         <input className="input replyStoryInput" type="text" placeholder={`Reply to ${currentUser.username}`} />
-                        <FontAwesomeIcon icon={faHeart} className="socialFuncIcon" style={{color: "#fff"}}/>
+                        {liked.length == 0 && (
+                            <FontAwesomeIcon icon={farHeart} className="socialFuncIcon" onClick={() => {dispatch(addLikeToStory(storyId));}}/>
+                        )}
+                        {liked.length >= 1 && (
+                            <FontAwesomeIcon icon={faHeart}  className="socialFuncIcon liked" onClick={() => { removeLike(likes);}}/>
+                        )}
                         <FontAwesomeIcon icon={faPaperPlane} className="socialFuncIcon" style={{color: "#fff"}}/>
                     </div>
                 </div>
