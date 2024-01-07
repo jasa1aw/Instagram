@@ -12,7 +12,7 @@ export const commentSlice = createSlice({
             state.comments = action.payload.comments
         },
         appendMyComments:(state,action) => {
-            state.comments = [...state.comments, action.payload.comment]
+            state.comments = [...state.comments, action.payload.comments]
         },
         handleDeletedComment:(state, action) => {
             // let comments = [...state.comments]
@@ -26,9 +26,10 @@ export const {setMyComments, appendMyComments, handleDeletedComment} = commentSl
 
 
 export const getMyComments = (id) => async(dispatch) =>{
+    console.log(id);
     try {
         const res = await axios.get(`${END_POINT}/api/getComments/${id}`)
-        if (res.data && Array.isArray(res.data)) dispatch(setMyComments({comments:res.data}))
+        dispatch(setMyComments({comments:res.data}))
     } catch (error) {
         alert("Ошибка при запросе comment")
     }
@@ -39,7 +40,7 @@ export const getMyComments = (id) => async(dispatch) =>{
 export const CreateComment = (data) => async(dispatch) => {
     console.log(data);
     axios.post(`${END_POINT}/api/newComment`, data).then((res) => {
-        dispatch(getMyComments(res.data.postId))
+        dispatch(appendMyComments({comments: res.data}))
     }).catch((error) =>{
         console.log(error);
     })
@@ -47,13 +48,10 @@ export const CreateComment = (data) => async(dispatch) => {
 
 
 export const deleteComment = (commentId, postId) => async(dispatch) =>{
-    // console.log(commentId);
-    // console.log(postId);
     try {
         const res = await axios.delete(`${END_POINT}/api/deleteComment/${commentId}`)
         dispatch(handleDeletedComment(commentId))
         dispatch(getMyComments(postId))
-        // console.log('res' + res);
     } catch (error) {
         console.error('Error submitting form:', error);
     }

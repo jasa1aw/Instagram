@@ -8,7 +8,7 @@ import { END_POINT } from "@/config/end_point";
 import { useDispatch } from "react-redux";
 import { editPost } from "@/app/store/slices/postSlice";
 
-export default function UploadModal({ closeModal, post, CloseEdit }) {
+export default function EditPost({ closeModal, post, CloseEdit }) {
   const currentUser = useSelector((state) => state.auth.currentUser)
   const dispatch = useDispatch()
 

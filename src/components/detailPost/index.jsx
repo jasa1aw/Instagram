@@ -1,33 +1,30 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
-import {faHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
+import {faXmark, faHeart} from "@fortawesome/free-solid-svg-icons";
+import {faHeart as farHeart, faComment, faPaperPlane, faBookmark} from "@fortawesome/free-regular-svg-icons";
 import { END_POINT } from "@/config/end_point";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { deletePost } from "@/app/store/slices/postSlice";
 import { getMyComments, CreateComment, deleteComment} from "@/app/store/slices/commentSlice";
+import { getLikesOfPost, addLikeToPost, addLikeToComment ,deletedLike, removeLikeComment} from "@/app/store/slices/likeSlice";
 import { formatDistanceToNow } from 'date-fns';
-
 import EditPost from "./editPost/editpost";
+
 export default function DetailPost({post, closeModal}) {
   const dispatch = useDispatch()
-  const currentUser = useSelector((state) => state.auth.currentUser)
-  const comments = useSelector((state) => state.comment.comments)
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const comments = useSelector((state) => state.comment.comments);
+  const likes = useSelector((state) => state.like.likes);
+  // console.log(likes);
   
   useEffect(() => {
     const didMount = async () => {
-      // Включите вашу логику здесь
-      await dispatch(getMyComments(post.id));
+      dispatch(getMyComments(post.id));
+      dispatch(getLikesOfPost(post.id));
     };
 
-    didMount(); // Вызываете вашу функцию
-
-    // Если вам нужно что-то выполнить при unmount компонента,
-    // например, отменить запрос, вы можете вернуть функцию очистки
-    return () => {
-      // Ваш код очистки, если это необходимо
-    };
+    didMount();
   }, [dispatch, post.id]);
   
 
@@ -35,7 +32,26 @@ export default function DetailPost({post, closeModal}) {
   const [moreCommentModal,setMoreCommentModal] = useState(false);
   const [settingModal, setSettingModal] = useState(false);
   const [openEditPost, setOpenEditPost] = useState(false);
+  let [liked, setLiked] = useState([]);
+  const [likedCom, setLikedCom] = useState(false);
 
+  useEffect(() => {
+    liked = likes.filter(item => item.userId === currentUser.id )
+    if(liked.length){
+      setLiked(liked)
+    }
+  },[likes])
+
+  const toggleLikedCom = () => {
+    setLikedCom(!likedCom);
+  };
+
+  const removeLike = (data) =>{
+    if(data[0].userId == currentUser.id){
+      dispatch(deletedLike(data[0].id, post.id))
+      setLiked([])
+    }
+  }
   
   const [InputValue,SetInputValue] = useState('')
   const save = () =>{
@@ -48,6 +64,11 @@ export default function DetailPost({post, closeModal}) {
   const CloseEdit = () => {
     setOpenEditPost(false)
   }
+  
+  const removeCommentLike = (id) =>{
+    dispatch(removeLikeComment(id, post.id))
+  }
+
   
 
   return (
@@ -133,33 +154,42 @@ export default function DetailPost({post, closeModal}) {
                   <h3>No comments yet.</h3>
                   <p>Start the conversation.</p>
                 </div>}
-                {comments.length > 0 && comments.map((item, index) =>(                  
-                  <div className="comment" key={index}>
-                    <div className="user">
-                      <div className="userAvatar modalAvatar">
-                        <img className="imgCircle" src="/img/profile/avatar.jpg" alt="" />
-                      </div>
-                      <div className="commentStatus">
-                        <div className="userAndCom">
-                        {item && item.User && <h3>{item.User.username}</h3>}
-                        <p>{item.description}</p>
+                {comments.length > 0 && comments.map((item, index) =>{
+                  const sentTime = formatDistanceToNow(new Date(item.updatedAt), { addSuffix: true })
+                  const ShowCommentLikeUser = item.Likes.filter(likes => likes.userId === currentUser.id)            
+                  return(
+                    <div className="comment" key={index}>
+                      <div className="user">
+                        <div className="userAvatar modalAvatar">
+                          <img className="imgCircle" src="/img/profile/avatar.jpg" alt="" />
                         </div>
-                        <div className="statsOfCom">
-                        <span className="sentDay">{formatDistanceToNow(new Date(item.updatedAt), { addSuffix: true })}</span>  
-                          <span className="reply">Reply</span>
-                          <button className='more-btn button removeCom' onClick={() => {SetDelComment(item.id); setMoreCommentModal(true)}}>
-                            <div className='circle-more'></div>
-                            <div className='circle-more'></div>
-                            <div className='circle-more'></div>
-                          </button>
+                        <div className="commentStatus">
+                          <div className="userAndCom">
+                          {item && item.User && <h3>{item.User.username}</h3>}
+                          <p>{item.description}</p>
+                          </div>
+                          <div className="statsOfCom">
+                            <span className="sentDay">{sentTime}</span>
+                            {item.Likes.length > 0 && <span className="reply">{item.Likes.length} like</span> } 
+                            <span className="reply">Reply</span>
+                            <button className='more-btn button removeCom' onClick={() => {SetDelComment(item.id); setMoreCommentModal(true)}}>
+                              <div className='circle-more'></div>
+                              <div className='circle-more'></div>
+                              <div className='circle-more'></div>
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <button className='more-btn button'>
-                      <FontAwesomeIcon icon={faHeart} className="likeBtn"/>
-                    </button>
-                </div>
-                ))}
+                      <button className='more-btn button'>
+                        {ShowCommentLikeUser.length === 0 && ( 
+                          <FontAwesomeIcon icon={farHeart} className="likeBtn" onClick={() => {dispatch(addLikeToComment(item.id));}}/>
+                        )}
+                        {ShowCommentLikeUser.length >= 1 && (
+                          <FontAwesomeIcon icon={faHeart}  className="liked" onClick={() => { removeCommentLike(item.Likes[0].id, item.id); }}/>
+                        )}
+                      </button>
+                  </div>)
+                  })}
               </div>
               {post && post.User && post.User.username == currentUser.username && <div className="boostBlog">
                   <h3>View insights</h3>
@@ -168,30 +198,36 @@ export default function DetailPost({post, closeModal}) {
               <div className="socialInteraction">
                   <div className="socialFunc">
                     <div className="socialFuncLeft">
-                      <FontAwesomeIcon icon={faHeart} className="socialFuncIcon"/>
+                      {liked.length == 0 && (
+                        <FontAwesomeIcon icon={farHeart} className="socialFuncIcon" onClick={() => {dispatch(addLikeToPost(post.id));}}/>
+                      )}
+                      {liked.length >= 1 && (
+                        <FontAwesomeIcon icon={faHeart}  className="socialFuncIcon liked" onClick={() => { removeLike(likes);}}/>
+                      )}
                       <FontAwesomeIcon icon={faComment} className="socialFuncIcon"/>
                       <FontAwesomeIcon icon={faPaperPlane} className="socialFuncIcon"/>
                     </div>
                     <FontAwesomeIcon icon={faBookmark} className="socialFuncIcon"/>
                   </div>
                   <div className="likedBy">
-                    <div className="likedByAvatar">
-                      <img className="imgCircle" src="/img/profile/avatar.jpg" alt="" />
-                    </div>
-                    <span className="usersLiked">Liked by <b>deennqq</b> and <b>17 others</b></span>
+                    {post.Likes.length > 1 && 
+                      <div className="likedByAvatar">
+                        <img className="imgCircle" src="/img/profile/avatar.jpg" alt="" />
+                      </div>
+                    }
+                    {liked.length >= 1 && post.Likes.length > 1 &&
+                      <span className="usersLiked">Liked by <b>{currentUser.username}</b> and <b>{post.Likes.length - 1} others</b> </span>
+                    }
                   </div>
                   <span className="postDay">December 5</span> 
-              </div>
+              </div>     
               <div className="addComment">
                 <div className="emoji-img">
                   <img className="img" src="/img/icons/smile.svg" alt="" />
                 </div>
                 <input className="input addCommentInput" type="text" placeholder="Add comment..." onChange={(e) => SetInputValue(e.target.value)} value={InputValue}/>
                 {InputValue.length > 0 && <button className="button postCommentBtn" onClick={save}>Post</button>} 
-                {InputValue.length == 0 && <button className="button postCommentBtnWithoutColor">Post</button>}
-                {/* {inputvalue.length >1 && <button className="Add-comment-to-post" onClick={save}>Post</button>}
-                {inputvalue.length ==0 && <button className="Add-comment-to-post withoutcolor">Post</button>} */}
-                
+                {InputValue.length == 0 && <button className="button postCommentBtnWithoutColor">Post</button>}                
               </div>
             </div>
           </div>

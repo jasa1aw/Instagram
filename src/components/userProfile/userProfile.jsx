@@ -7,18 +7,19 @@ import FollowersModal from '../SocialNet/followers';
 import FollowingModal from '../SocialNet/following';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMyPosts , CreatePost, getPostById} from '@/app/store/slices/postSlice';
-export default function UserProfile ({user,followers,following}) {
+import {CreatePost, getPostById} from '@/app/store/slices/postSlice';
+
+export default function UserProfile ({user, posts, post, followers,following}) {
     const [openDetailModal, setOpenDetailModal] = useState(false)
 
     const dispatch = useDispatch()
     const currentUser = useSelector((state) => state.auth.currentUser)
-    const posts = useSelector((state) => state.post.posts)
-    // console.log(posts);
-    const didMount = () =>{
-        dispatch(getMyPosts())
-    }
-    useEffect(didMount,[])
+    // const posts = useSelector((state) => state.post.posts)
+    // // console.log(posts);
+    // const didMount = () =>{
+    //     dispatch(getMyPosts())
+    // }
+    // useEffect(didMount,[])
     // console.log(posts);
     const onSelect = (image,description) => {
         const form = new FormData();
@@ -51,7 +52,7 @@ export default function UserProfile ({user,followers,following}) {
     const modalOpen = () =>{
         setOpenModal(true) 
     }
-    const post = useSelector((state) => state.post.post)
+    
     // console.log(post);
     
 

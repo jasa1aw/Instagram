@@ -11,13 +11,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getAllPosts, getPostById, CreatePost } from "@/app/store/slices/postSlice";
 import { getMyStories } from '@/app/store/slices/storySlice';
 
-export default function Home () {
+export default function Home ({posts, post}) {
     const dispatch = useDispatch()
-    const posts = useSelector((state) => state.post.allPosts)
-    const didMount = () =>{
-        dispatch(getAllPosts())
-    }
-    useEffect(didMount,[])
+    // const posts = useSelector((state) => state.post.allPosts)
+    // const didMount = () =>{
+    //     dispatch(getAllPosts())
+    // }
+    // useEffect(didMount,[])
         
     const [openDetailModal, setOpenDetailModal] = useState(false)
     const SelectedPost = (data) =>{
@@ -28,7 +28,7 @@ export default function Home () {
         }
     }
     useEffect(SelectedPost,[])
-    const post = useSelector((state) => state.post.post)
+    
 
     const [openModal, setOpenModal] = useState(false);
 
